@@ -5,7 +5,7 @@ class BooksList extends React.Component {
 		return (
 			<div>
 				<h1>
-					BooksList
+					All Your Books
 				</h1>
 			</div>
 		);

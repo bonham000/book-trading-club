@@ -69,17 +69,19 @@ class Account extends React.Component {
  		const { user } = this.props;
  		return (
 		  <div className = 'accountComponent'>
-				<h2>Your Profile:</h2>
+				<h1>Your Profile:</h1>
 				
 					{ this.state.editProfile ?
 
 						<div>
+							<label>Username:</label><br />
 							<input
 								type = "text"
 								name = 'fullName'
 								placeholder = 'Full Name'
 								value = {this.state.fullName}
 								onChange = {this.handleInput} /><br />
+							<label>Location:</label><br />
 							<input
 								type = "text"
 								name = 'location'

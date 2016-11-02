@@ -1,10 +1,13 @@
 import express from 'express'
+import axios from 'axios'
 import assert from 'assert'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
 import dotenv from 'dotenv'
 dotenv.config();
+
+import XMLConverter from 'xmljson'
 
 import User from '../models/users'
 
@@ -30,6 +33,21 @@ app.post('/api/protected', (req, res) => {
 	});
 });
 
+app.post('/add-book', (req, res) => {
+	const { title } = req.body;
+
+	axios.get(`https://www.goodreads.com/search/index.xml?key=${process.env.GOODREADS_KEY}&q=${title}`).then( (response) => {
+		let result = response.data;
+		XMLConverter.to_json(result, (err, data) => {
+			if (!err) {
+				res.status(201).send(data.GoodreadsResponse.search.results.work[0].best_book);
+			}
+		});
+		// res.status(201).send({data: response})
+	}).catch(err => console.log(err));
+
+})
+
 app.post('/update-user-info', (req, res) => {
 
 	const { userID, fullName, location, token } = req.body;
@@ -52,16 +70,3 @@ app.post('/update-user-info', (req, res) => {
 		}
 	});
 });
-
-app.get('/goodreads', (req, res) => {
-
-	console.log('API called:', req.body);
-
-	axios.get(`https://www.goodreads.com/search.xml?key=${process.env.GOODREADS_KEY}&q=${req.body.query}`).then( (response) => {
-		console.log(response);
-	}).catch(err => console.log(err));
-
-});
-
-
-

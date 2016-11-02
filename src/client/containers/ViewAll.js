@@ -7,7 +7,7 @@ class ViewAll extends React.Component {
  	render() {
  		return (
 		  <div className = 'viewallComponent'>
-		    <h1>ViewAll Component</h1>
+		    <h1>All Uploaded Books</h1>
 		  </div>
 	  );
  	}
