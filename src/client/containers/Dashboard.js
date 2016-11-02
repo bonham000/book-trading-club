@@ -1,4 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import Trades from '../components/Trades'
+import BooksList from '../components/BooksList'
 
 class Dashboard extends React.Component {
 	 constructor(props) {
@@ -7,9 +12,11 @@ class Dashboard extends React.Component {
  	render() {
  		return (
 		  <div className = 'dashboardComponent'>
-		    <h1>Dashboard Component</h1>
+				<Trades />
+				<BooksList />
 		  </div>
 	  );
  	}
 }
+
 export default Dashboard;

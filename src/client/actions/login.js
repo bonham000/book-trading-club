@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { browserHistory } from 'react-router'
 
+import { initializeUser } from './user'
+
 // There are three possible states for our login process and we need actions for each of them
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -33,33 +35,34 @@ function loginError(error) {
   }
 }
 
+// this checks authentication against passport login
 export function checkAuth() {
   return dispatch => {
-    return axios.post('http://127.0.0.1:3000/verify').then ( (res) => {
-      if (res.status === 201) {
+    return axios.post('http://127.0.0.1:3000/verify').then ( (response) => {
+      if (response.status === 201) {
 
-          const user = res.data;
+          const user = response.data;
 
           // If login was successful, set the token in local storage
           localStorage.setItem('user', user.user)
           localStorage.setItem('id_token', user.id_token)
 
-          console.log(user.userData);
-
-          // Dispatch the success action
+          // Dispatch the success action and
+          // initialize user in Redux store
           dispatch(receiveLogin(user))
+          dispatch(initializeUser(user.userData))
 
           browserHistory.push('/dashboard');
         }
       }).catch(err => { 
         console.log('You are not authenticated', err.response.data);
         dispatch(loginError(err.response.data));
-        })
+      });
     }
   }
 
 
-// Calls the API to get a token and dispatches actions along the way
+// this logins in an existing user
 export function loginUser(creds) {
  
   return dispatch => {
@@ -76,10 +79,10 @@ export function loginUser(creds) {
           localStorage.setItem('user', user.user)
           localStorage.setItem('id_token', user.id_token)
 
-          console.log(user.userData);
-
-          // Dispatch the success action
+          // Dispatch the success action and
+          // initialize user in Redux store
           dispatch(receiveLogin(user))
+          dispatch(initializeUser(user.userData))
 
           browserHistory.push('/dashboard');
         }
@@ -110,6 +113,7 @@ export function registrationError(error) {
   }
 }
 
+// this registers a new user
 export function registerUser(user) {
 
   return dispatch => {
@@ -129,10 +133,10 @@ export function registerUser(user) {
       localStorage.setItem('user', user.user);
       localStorage.setItem('id_token', user.id_token);
 
-      console.log(res.data.userData);
-
-      // Login success action is dispatched
-      dispatch(receiveLogin(user));
+      // Dispatch the success action and
+      // initialize user in Redux store
+      dispatch(receiveLogin(user))
+      dispatch(initializeUser(res.data.userData))
 
     }).then( () => {
       // User is redirected to the home page

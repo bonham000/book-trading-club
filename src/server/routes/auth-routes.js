@@ -43,9 +43,11 @@ app.post('/register', function(req, res) {
                     githubId: '',
                     twitterId: '',
                     userData: {
-                      username: '',
+                      userID: userInfo.email,
+                      username: userInfo.username,
                       fullName: '',
-                      userBooks: '',
+                      location: '',
+                      userBooks: [],
                       pendingRequests: [],
                       receivedRequests: []
                     }

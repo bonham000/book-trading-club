@@ -30,9 +30,11 @@ passport.use(new GitHubStrategy({
             password: '',
             githubId: profile.id,
             userData: {
-              username: '',
-              fullName: '',
-              userBooks: '',
+              userID: profile.emails[0].value,
+              username: profile.username,
+              fullName: profile.displayName,
+              location: '',
+              userBooks: [],
               pendingRequests: [],
               receivedRequests: []
             }
@@ -92,7 +94,4 @@ app.post('/verify', function(req, res){
  });
 
 // handle logout in passport
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
+app.get('/logout-passport', function(req, res) { req.logout() });

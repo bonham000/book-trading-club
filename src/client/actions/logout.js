@@ -1,9 +1,8 @@
+import axios from 'axios'
 import { browserHistory } from 'react-router'
 
-// Three possible states for our logout process as well.
-// Since we are using JWTs, we just need to remove the token
-// from localStorage. These actions are more useful if we
-// were calling the API to log the user out
+import { removeUserDetails } from './user'
+
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE'
@@ -24,13 +23,19 @@ function receiveLogout() {
   }
 }
 
-// Logs the user out
 export function logoutUser() {
   return dispatch => {
+    // dispatch logout action
     dispatch(requestLogout())
+    // remove user authentication data from local storage and dispatch action
     localStorage.removeItem('id_token')
     localStorage.removeItem('user')
     dispatch(receiveLogout())
-    browserHistory.push('/logout')
+    // remove user details from state
+    dispatch(removeUserDetails())
+    // direct server to logout session
+    axios.get('/logout-passport')
+    // redirect home
+    browserHistory.push('/')
   }
 }

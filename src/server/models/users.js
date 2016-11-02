@@ -10,9 +10,11 @@ var User = new Schema({
 		password: String,
 		githubId: String,
 	  userData: {
+	  	userID: String,
 	    username: String,
 	    fullName: String,
-	    userBooks: String,
+	    location: String,
+	    userBooks: Array,
 	    pendingRequests: Array,
 	    receivedRequests: Array
 	  }
