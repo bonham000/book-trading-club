@@ -8,7 +8,6 @@ var User = new Schema({
 		displayName: String,
 		username: String,
 		password: String,
-		twitterId: String,
 		githubId: String,
 		userData: Array
 });

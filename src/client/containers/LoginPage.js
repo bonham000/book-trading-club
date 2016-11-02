@@ -51,9 +51,6 @@ class LoginPage extends React.Component {
         <h1>Log In Here</h1>
 
         <div className = 'socialLogin'>
-          <a className = "btn btn-block btn-social btn-twitter" href = "/auth/twitter">
-            <span className = "fa fa-twitter"></span> Sign in with Twitter
-          </a>
            <a className = "btn btn-block btn-social btn-github" href = "/auth/github">
             <span className = "fa fa-github"></span> Sign in with GitHub
           </a>
