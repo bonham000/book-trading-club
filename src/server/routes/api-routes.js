@@ -34,19 +34,50 @@ app.post('/api/protected', (req, res) => {
 });
 
 app.post('/add-book', (req, res) => {
-	const { title } = req.body;
+	const { title, userID, token } = req.body;
 
-	axios.get(`https://www.goodreads.com/search/index.xml?key=${process.env.GOODREADS_KEY}&q=${title}`).then( (response) => {
-		let result = response.data;
-		XMLConverter.to_json(result, (err, data) => {
-			if (!err) {
-				res.status(201).send(data.GoodreadsResponse.search.results.work[0].best_book);
-			}
-		});
-		// res.status(201).send({data: response})
-	}).catch(err => console.log(err));
+	jwt.verify(token, secret, (err, decoded) => {
+		if (!err) {
+			axios.get(`https://www.goodreads.com/search/index.xml?key=${process.env.GOODREADS_KEY}&q=${title}`).then( (response) => {
+				let result = response.data;
+				XMLConverter.to_json(result, (err, data) => {
+					if (!err) {
 
-})
+						const bookData = data.GoodreadsResponse.search.results.work[0].best_book
+
+						const book = {
+							id: bookData.id,
+							title: bookData.title,
+							author: bookData.author,
+							image: bookData.author
+						}
+
+						console.log(book);
+
+						User.findOne({ id: userID }, function(err, user) {
+							if (err) throw err;
+							else if (user) {
+								let books = [...user.userData.userBooks, book]
+								user.userData.userBooks = books;
+								console.log(books);
+								user.save(function(err) {
+									if (err) throw err;
+									else { res.status(201).send(user.userData) }
+								});
+							}
+						});
+
+					}
+				});
+			}).catch(err => console.log(err));
+		}
+		else {
+			res.status(401).send('You are not authorized!');
+		}
+
+	});
+
+});
 
 app.post('/update-user-info', (req, res) => {
 

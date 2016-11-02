@@ -5,7 +5,9 @@ import { bindActionCreators } from 'redux'
 import { addBook } from '../actions/books'
 
 @connect(
-	null,
+	state => ({
+		user: state.user
+	}),
 	dispatch => ({
 		addBook: bindActionCreators(addBook, dispatch)
 	})
@@ -31,7 +33,11 @@ class AddBook extends React.Component {
 	addBook() {
 		let { title } = this.state;
 		if (title !== '') {
-			this.props.addBook(title);
+			this.props.addBook({
+				userID: this.props.user.userID,
+				token: localStorage.getItem('id_token'),
+				title: title
+			});
 			this.setState({
 				title: ''
 			});
@@ -48,6 +54,7 @@ class AddBook extends React.Component {
 					value = {this.state.title}
 					onChange = {this.handleChange} /><br />
 				<button onClick = {this.addBook}>Search and Add Book</button>
+				<p>Your Current Collection:</p>
 			</div>
 		);
 	}
