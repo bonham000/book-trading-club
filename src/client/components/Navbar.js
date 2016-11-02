@@ -15,9 +15,16 @@ class Navbar extends Component {
         <div className = "navigationWrapper">
           <div className = "linksWrapper">
 
-            <Link to = '/' className = 'navLink' activeClassName = 'activeRoute'>Home</Link>                             
+            { !isAuthenticated &&
+              <Link to = '/' className = 'navLink' activeClassName = 'activeRoute'>Home</Link> }
 
             { isAuthenticated &&
+              <Link to = '#' className = 'navLink' to = 'dashboard' >Dashboard</Link> }
+            { isAuthenticated && 
+              <Link to = '#' className = 'navLink' to = 'view-all' >View All Books</Link> }
+            { isAuthenticated &&
+              <Link to = '#' className = 'navLink' to = 'my-account' >My Account</Link> }
+            { isAuthenticated && 
               <Link to = '#' className = 'navLink' onClick = { () => dispatch(logoutUser()) }>Logout</Link> }
 
             { !isAuthenticated &&

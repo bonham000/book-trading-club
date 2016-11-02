@@ -9,7 +9,13 @@ var User = new Schema({
 		username: String,
 		password: String,
 		githubId: String,
-		userData: Array
+	  userData: {
+	    username: String,
+	    fullName: String,
+	    userBooks: String,
+	    pendingRequests: Array,
+	    receivedRequests: Array
+	  }
 });
 
 module.exports = mongoose.model('User', User);

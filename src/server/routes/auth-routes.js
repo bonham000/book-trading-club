@@ -32,6 +32,7 @@ app.post('/register', function(req, res) {
             if (err) {
                 return done(err);
             }
+            // if there is no user with this email as id, create a new one
             if (!user) {
                 const passwordDigest = bcrypt.hashSync(userInfo.password, 10);
                 user = new User({ 
@@ -41,15 +42,24 @@ app.post('/register', function(req, res) {
                     password: passwordDigest,
                     githubId: '',
                     twitterId: '',
-                    userData: []
+                    userData: {
+                      username: '',
+                      fullName: '',
+                      userBooks: '',
+                      pendingRequests: [],
+                      receivedRequests: []
+                    }
                 });
                 user.save(function(err) {
                     if (err) console.log(err);
                     res.status(201).send({
                       username: userInfo.username,
-                      id_token: createToken(userInfo.username)
+                      id_token: createToken(userInfo.username),
+                      userData: user.userData
                     });
                 });
+                // in this case the user with this email as id signed in previously with GitHub
+                // update the same account
               } else if (user.password === '') {
                 const passwordDigest = bcrypt.hashSync(user.password, 10);
                 user.password = passwordDigest;
@@ -57,15 +67,14 @@ app.post('/register', function(req, res) {
                     if (err) console.log(err);
                     res.status(201).send({
                       username: user.username,
+                      userData: user.userData,
                       id_token: createToken(user.username)
                     });
                 });
+                // if user exists with this id, prevent new registration
               } else {
                 console.log('user,', user);
-                res.status(201).send({
-                    username: user.username,
-                    id_token: createToken(user.username)
-                });
+                res.status(401).send('This email is already registered.');
             }
         });
       }
@@ -93,10 +102,12 @@ app.post('/sessions/create', function(req, res) {
         db.close();
       }
       // if user exists check if password is valid
+      // if it is return user data and authentication credentials
       else if (bcrypt.compareSync(password, data.password)) {
         res.status(201).send({
           id_token: createToken(data.username),
-          user: data.username
+          username: data.username,
+          userData: data.userData
         });
         db.close();
       }

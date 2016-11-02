@@ -29,7 +29,13 @@ passport.use(new GitHubStrategy({
             username: profile.username,
             password: '',
             githubId: profile.id,
-            userData: []
+            userData: {
+              username: '',
+              fullName: '',
+              userBooks: '',
+              pendingRequests: [],
+              receivedRequests: []
+            }
         });
         user.save(function(err) {
             if (err) console.log(err);
@@ -64,11 +70,22 @@ app.get('/auth/github/callback',
 
 // client verifies auth flow from passport redirect are receives jwt token in response or redirects to login page otherwise
 app.post('/verify', function(req, res){
-  // if user is authenticated send them a jwt token
+
+  // if user is authenticated find them in the database to return
+  // their user data and send them a jwt token for client authentication
   if (req.isAuthenticated()) {
-     res.status(201).send({
-      id_token: createToken(req.user.username),
-      user: req.user.username
+    User.findOne( {id: req.user.id }, function(err, user) {
+      
+      if (err) return done(err);
+      
+      else if (user) {
+        res.status(201).send({
+          id_token: createToken(req.user.username),
+          user: req.user.username,
+          userData: user.userData
+        });
+      }
+
   });
   // if session is not authenticated redirect to login
   } else { res.redirect('/login') }

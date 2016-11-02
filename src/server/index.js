@@ -54,6 +54,7 @@ passport.deserializeUser(function(user, done) { done(null, user) });
 // connect authentication and api routes
 app.use(authRoutes);
 app.use(passportRoutes);
+app.use(apiRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 

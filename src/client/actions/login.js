@@ -44,10 +44,12 @@ export function checkAuth() {
           localStorage.setItem('user', user.user)
           localStorage.setItem('id_token', user.id_token)
 
+          console.log(user.userData);
+
           // Dispatch the success action
           dispatch(receiveLogin(user))
 
-          browserHistory.push('/');
+          browserHistory.push('/dashboard');
         }
       }).catch(err => { 
         console.log('You are not authenticated', err.response.data);
@@ -74,10 +76,12 @@ export function loginUser(creds) {
           localStorage.setItem('user', user.user)
           localStorage.setItem('id_token', user.id_token)
 
+          console.log(user.userData);
+
           // Dispatch the success action
           dispatch(receiveLogin(user))
 
-          browserHistory.push('/');
+          browserHistory.push('/dashboard');
         }
       }).catch(err => { 
         console.log('Authentication failed:', err.response.data);
@@ -125,12 +129,14 @@ export function registerUser(user) {
       localStorage.setItem('user', user.user);
       localStorage.setItem('id_token', user.id_token);
 
+      console.log(res.data.userData);
+
       // Login success action is dispatched
       dispatch(receiveLogin(user));
 
     }).then( () => {
       // User is redirected to the home page
-      browserHistory.push('/');
+      browserHistory.push('/dashboard');
     }).catch( (err) => {
       console.log('Registration Error:', err.response.data);
       dispatch(registrationError(err.response.data));
