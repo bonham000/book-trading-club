@@ -38,7 +38,7 @@ var _users2 = _interopRequireDefault(_users);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dotenv2.default.config({ path: __dirname + '/.env' });
+_dotenv2.default.config({ path: __dirname + '../.env' });
 
 var app = module.exports = _express2.default.Router();
 
