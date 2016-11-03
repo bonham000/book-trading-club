@@ -38,7 +38,7 @@ const secretString = process.env.SECRET_STRING;
 
 app.use(cookieParser(secretString));
 app.use(session({
-  secret: 'super secret key',
+  secret: secretString,
   resave: true,
   secure: false,
   saveUninitialized: true
