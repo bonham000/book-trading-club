@@ -89,7 +89,7 @@ class ViewAll extends React.Component {
 			);
 		});
  		return (
- 			<div className = 'viewallComponent'>
+ 			<div className = 'booksForTradeComponent'>
 			  <div>
 			    <h1>Books Available for Trade from Other Users</h1>
 			    {renderList}

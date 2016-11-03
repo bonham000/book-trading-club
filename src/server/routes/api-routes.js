@@ -17,19 +17,6 @@ const url = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 
-app.post('/api/protected', (req, res) => {
-	let token = req.body.token;
-	jwt.verify(token, secret, (err, decoded) => {
-		if (!err) {
-				MongoClient.connect(url, (err, db) => {
-					assert.equal(null, err);			
-				 	res.end();
-					db.close();
-				});
-		} else { res.status(401).send('Token invalid, request denied.') }
-	});
-});
-
 app.get('/get-all-books', (req, res) => {
 	MongoClient.connect(url, (err, db) => {
 		assert.equal(null, err)
@@ -83,6 +70,30 @@ app.post('/add-book', (req, res) => {
 			}).catch(err => console.log(err));
 		} else { res.status(401).send('You are not authorized!') }
 	});
+});
+
+app.post('/remove-book', (req, res) => {
+	const { bookID, userID, token } = req.body;
+
+	jwt.verify(token, secret, (err, decoded) => {
+		if (err) { res.status(401).send('You are not authorized!') }
+		else {
+			User.findOne({ id: userID }, function(err, user) {
+				if (err) throw err;
+				else if (user) {
+					let books = user.userData.userBooks;
+					let newBooks = books.filter( (book) => {
+						return book.id !== bookID;
+					});
+					user.userData.userBooks = newBooks;
+					user.save(function(err) {
+						res.status(201).send(user);
+					});
+				}
+			});
+		}
+	});
+
 });
 
 // handles user updating location and full name

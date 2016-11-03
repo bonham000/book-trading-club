@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import '../theme/booklist.scss'
-
 @connect(
 	state => ({
 		books: state.books
@@ -28,8 +26,8 @@ class BooksList extends React.Component {
 			);
 		});
  		return (
-		  <div className = 'viewallComponent'>
-		    <h2>Here are some of our current books:</h2>
+		  <div className = 'booksListComponent'>
+		    <h2>Here are some of the books in our collection:</h2>
 		    {renderList}
 		  </div>
 	  );

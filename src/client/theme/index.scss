@@ -126,6 +126,99 @@ body {
 	}
 }
 
+// user book list view
+.booksForTradeComponent {
+	.book {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid rgba(20,20,20,0.4);
+		border-radius: 3px;
+		background: rgba(20,20,20,0.15);
+		width: 700px;
+		margin: 15px auto;
+		padding-top: 15px;
+		padding-bottom: 15px;
+		.image {
+			width: 150px;
+			height: auto;
+		}
+		.content {
+			border-left: 2px solid #06C1FF;
+			width: 550px;
+			height: 150px;
+			padding-left: 8px;
+			text-align: left;
+			h2 {
+				margin: 3px;
+				font-size: 26px;
+			}
+			p {
+				margin: 2px;
+				font-size: 20px;
+			}
+			button:hover {
+				border: 1px solid black;
+			}
+		}
+	}
+}
+
+// homepage books list view
+.booksListComponent {
+	.book {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid rgba(20,20,20,0.4);
+		border-radius: 3px;
+		background: rgba(20,20,20,0.15);
+		width: 700px;
+		margin: 15px auto;
+		padding-top: 15px;
+		padding-bottom: 15px;
+		.image {
+			width: 150px;
+			height: auto;
+		}
+		.content {
+			border-left: 2px solid #06C1FF;
+			width: 550px;
+			height: 150px;
+			padding-left: 8px;
+			padding-top: 35px;
+			text-align: left;
+			h2 {
+				margin: 3px;
+				font-size: 26px;
+			}
+			p {
+				margin: 2px;
+				font-size: 20px;
+			}
+		}
+	}
+}
+
+.accountComponent {
+	h1 {
+		border-bottom: 2px solid $blue;
+		width: 500px;
+		margin: 15px auto;
+		padding-bottom: 5px;
+	}
+	p {
+		font-size: 26px;
+	}
+	button {
+		margin-top: 10px;
+	}
+}
+
 .openTradesWrapper {
 	h1 {
 		border-bottom: 2px solid $blue;
@@ -135,12 +228,46 @@ body {
 		width: 550px;
 		margin: auto;
 	}
+	.receivedRequests {
+
+	}
+	.pendingRequests {
+		
+	}
+
 }
 
-.myCollection {
-	text-align: left;
-	width: 750px;
-	margin: auto;
+// user's booklist component
+.myCollectionComponent {
+		.submission {
+			color: $pink;
+			margin-top: 7px;
+		}
+	.booksList {
+		text-align: left;
+		width: 750px;
+		border: 1px solid rgba(20,20,20,0.2);
+		border-radius: 3px;
+		margin: 7px auto;
+		padding: 12px;
+		.title {
+			font-size: 26px;
+		}
+		.author {
+			font-size: 22px;
+			button {
+				font-size: 18px;
+				border: 1px solid rgba(30,30,30,0.75);
+				background: rgba(250,250,250,0.45);
+				margin-left: 8px;
+			}
+		}
+	}
+	hr {
+		width: 550px;
+		background: $blue;
+		height: 2px;
+	}
 }
 
 .tradeRequest {
@@ -152,13 +279,18 @@ body {
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	padding: 5px 15px;
+	padding: 5px 25px;
 	border: 1px solid black;
 	background: rgba(250,250,250,0.95);
 	z-index: 5;
 	p {
 		font-size: 22px;
 	}
+	 select {
+  	width: 400px;
+  	margin-bottom: 12px;
+  	font-size: 26px;
+  }
   button {
   	background: rgba(235,235,235,0.75);
   	border: 1px solid black;
@@ -175,13 +307,56 @@ body {
   button:hover {
   	background: $orange;
   }
-  select {
-  	width: 400px;
-  	margin-bottom: 12px;
-  }
 }
 
 @media only screen and (max-width: 900px) {
+	.booksForTradeComponent {
+		.book {
+			width: 70vw;
+			.image {
+				width: 125px;
+				height: auto;
+			}
+			.content {
+				width: 55vw;
+				height: 200px;
+				padding-left: 8px;
+				text-align: left;
+				h2 {
+					margin: 3px;
+					font-size: 24px;
+					width: 50vw;
+				}
+				p {
+					margin: 2px;
+					font-size: 20px;
+				}
+			}
+		}
+	}
+	.booksListComponent {
+		.book {
+			width: 65vw;
+			.image {
+				width: 125px;
+				height: auto;
+			}
+			.content {
+				width: 30vw;
+				height: 150px;
+				padding-top: 12px;
+				h2 {
+					margin: 3px;
+					font-size: 26px;
+					width: 30vw;
+				}
+				p {
+					margin: 2px;
+					font-size: 20px;
+				}
+			}
+		}
+	}
 	.aboutWrapper {
 		h1 {
 			width: 85vw;
@@ -206,7 +381,137 @@ body {
 	}
 }
 
+@media only screen and (max-width: 750px) {
+	.accountComponent {
+		h1 {
+			padding-bottom: 10px;
+			width: 85vw;
+			margin: 25px auto 20px auto;
+		}
+		p {
+			font-size: 22px;
+		}
+		button {
+			width: 85vw;
+			font-size: 22px;
+			margin-top: 15px;
+		}
+		input {
+			font-size: 20px;
+			width: 80vw;
+		}
+	}
+	.tradeRequest {
+		position: absolute;
+		width: 90vw;
+		height: 450px;
+		top: 25px;
+		h1 {
+			font-size: 26px;
+		}
+		p {
+			font-size: 18px;
+		}
+		select {
+			width: 75vw;
+			font-size: 18px;
+		}
+	  button {
+	  	font-size: 22px;
+			margin: 10px;
+			padding: 7px 12px;
+			width: 70vw;
+	  }
+	}
+	.myCollectionComponent {
+		h1 {
+			font-size: 24px;
+		}
+		input {
+			width: 85vw;
+			font-size: 20px;
+		}
+		button {
+			font-size: 22px;
+		}
+		.submission {
+			font-size: 22px;
+		}
+		.booksList {
+			text-align: left;
+			width: 90vw;
+			margin: 12px auto;
+			.title {
+				font-size: 20px;
+				width: 80vw;
+			}
+			.author {
+				font-size: 18px;
+			}
+		}
+		hr {
+			width: 85vw;
+		}
+	}
+}
+
 @media only screen and (max-width: 650px) {
+	.booksForTradeComponent {
+		h1 {
+			font-size: 24px;
+		}
+		.book {
+			width: 90vw;
+			.image {
+				width: 100px;
+				height: auto;
+			}
+			.content {
+				width: 55vw;
+				height: 200px;
+				padding-left: 10px;
+				margin-left: 20px;
+				text-align: left;
+				h2 {
+					margin: 3px;
+					font-size: 20px;
+					width: 50vw;
+				}
+				p {
+					margin: 2px;
+					font-size: 18px;
+				}
+				button {
+					font-size: 22px;
+				}
+			}
+		}
+	}
+	.booksListComponent {
+		.book {
+			width: 90vw;
+			.image {
+				width: 75px;
+				height: auto;
+			}
+			.content {
+				width: 55vw;
+				height: 150px;
+				text-align: left;
+				padding-left: 10px;
+				margin-left: 20px;
+				h2 {
+					width: 50vw;
+					margin: 3px;
+					font-size: 20px;
+				}
+				p {
+					margin: 2px;
+					font-size: 18px;
+				}
+			}
+		}
+	}
 	.navigationWrapper {
 		padding-top: 5px;
 		padding-bottom: 10px;

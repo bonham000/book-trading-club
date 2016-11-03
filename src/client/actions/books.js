@@ -14,6 +14,15 @@ export function addBook(data) {
 	}
 };
 
+export function removeBook(data) {
+	return dispatch => {
+		axios.post('/remove-book', data).then( (res) => {
+			console.log(res.data);
+			dispatch(updateUser(res.data.userData));
+		}).catch(err => console.log(err));
+	}
+}
+
 export const SET_ALL_BOOKS = 'SET_ALL_BOOKS'
 
 function setAllBooks(books) {
