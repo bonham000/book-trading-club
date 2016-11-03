@@ -4,6 +4,8 @@ import { browserHistory } from 'react-router'
 import { initializeUser } from './user'
 import { retrieveAllBooks } from './books'
 
+import HOST_URL from '../constants/host'
+
 // There are three possible states for our login process and we need actions for each of them
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
@@ -38,7 +40,7 @@ function loginError(error) {
 
 export function checkCredentials() {
   return dispatch => {
-    return axios.post('http://127.0.0.1:3000/verify').then ( (response) => {
+    return axios.post(HOST_URL + '/verify').then ( (response) => {
       if (response.status === 401) {
         console.log('You are not authenticated', err.response.data);
         dispatch(loginError(err.response.data));
@@ -53,7 +55,7 @@ export function checkCredentials() {
 // this checks authentication against passport login
 export function checkAuth() {
   return dispatch => {
-    return axios.post('http://127.0.0.1:3000/verify').then ( (response) => {
+    return axios.post(HOST_URL + '/verify').then ( (response) => {
       if (response.status === 201) {
 
           const user = response.data;
@@ -86,7 +88,7 @@ export function loginUser(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return axios.post('http://127.0.0.1:3000/sessions/create', creds).then( (response) => {
+    return axios.post(HOST_URL + '/sessions/create', creds).then( (response) => {
       
       if (response.status === 201) {
           const user = response.data;
@@ -140,7 +142,7 @@ export function registerUser(user) {
     dispatch(newSignUp(user))
 
     // Request is made to the server with the registration data
-    return axios.post('http://127.0.0.1:3000/register', user).then( (res) => {
+    return axios.post(host_url + '/register', user).then( (res) => {
 
       let user = {
         user: res.data.username,
