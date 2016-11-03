@@ -36,6 +36,20 @@ function loginError(error) {
   }
 }
 
+export function checkCredentials() {
+  return dispatch => {
+    return axios.post('http://127.0.0.1:3000/verify').then ( (response) => {
+      if (response.status === 401) {
+        console.log('You are not authenticated', err.response.data);
+        dispatch(loginError(err.response.data));
+        browserHistory.push('/login');
+      }
+      }).catch(err => { 
+        console.log('There was an error checking your credentials');;
+      });
+    }
+  }
+
 // this checks authentication against passport login
 export function checkAuth() {
   return dispatch => {
@@ -59,6 +73,7 @@ export function checkAuth() {
       }).catch(err => { 
         console.log('You are not authenticated', err.response.data);
         dispatch(loginError(err.response.data));
+        browserHistory.push('/login');
       });
     }
   }

@@ -40,7 +40,7 @@ class TradeRequest extends React.Component {
 						:
 
 						<div>
-							<p>Thank you! Your trade has been submitted.</p> 	
+							<p className = 'success'>Thank you! Your trade request has been submitted to the book owner.</p> 	
 							<button onClick = {this.props.cancelTrade}>Close this window</button>
 						</div>
 

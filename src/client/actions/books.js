@@ -1,6 +1,8 @@
 
 import axios from 'axios'
 
+import { browserHistory } from 'react-router'
+
 import { updateUser } from './user'
 
 export function addBook(data) {
@@ -10,7 +12,10 @@ export function addBook(data) {
 			// update returned user data in store
 			dispatch(updateUser(user));
 			dispatch(retrieveAllBooks())
-		}).catch(err => console.log(err));
+		}).catch((err) => {
+			console.log(err);
+			browserHistory.push('/login');
+		});
 	}
 };
 
@@ -19,7 +24,10 @@ export function removeBook(data) {
 		axios.post('/remove-book', data).then( (res) => {
 			console.log(res.data);
 			dispatch(updateUser(res.data.userData));
-		}).catch(err => console.log(err));
+		}).catch((err) => {
+			console.log(err);
+			browserHistory.push('/login');
+		});
 	}
 }
 
@@ -48,7 +56,10 @@ export function retrieveAllBooks() {
 			// server returns a nested array so let's flatten it here
 			const books = flatten(response.data);
 			dispatch(setAllBooks(books));
-		}).catch(err => console.log(err));
+		}).catch((err) => {
+			console.log(err);
+			browserHistory.push('/login');
+		});
 	}
 };
 
@@ -72,7 +83,10 @@ export function acceptTrade(trade) {
 				// and dispatch request to get all books for updated book ownership
 				dispatch(retrieveAllBooks());
 			}
-		}).catch(err => console.log(err));
+		}).catch((err) => {
+			console.log(err);
+			browserHistory.push('/login');
+		});
 	}
 };
 
@@ -81,7 +95,10 @@ export function declineTrade(trade) {
 		axios.post('/decline-trade', trade).then( (response) => {
 			// for decline receive new user data and update local state
 			dispatch(updateUser(response.data.userData));
-		}).catch(err => console.log(err));
+		}).catch((err) => {
+			console.log(err);
+			browserHistory.push('/login');
+		});
 	}
 };
 
