@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { checkCredentials } from '../actions/login'
 import { updateUserInfo } from '../actions/user'
 
 import '../theme/account.scss'
@@ -12,8 +11,7 @@ import '../theme/account.scss'
 		user: state.user
 	}),
 	dispatch => ({
-		updateUserInfo: bindActionCreators(updateUserInfo, dispatch),
-		checkCredentials: bindActionCreators(checkCredentials, dispatch)
+		updateUserInfo: bindActionCreators(updateUserInfo, dispatch)
 	})
 )
 class Account extends React.Component {
@@ -21,7 +19,6 @@ class Account extends React.Component {
 		user: React.PropTypes.object.isRequired,
 		updateUserInfo: React.PropTypes.func.isRequired
 	}
-	componentWillMount() { this.props.checkCredentials() }
 	componentDidMount() {
 		const { user } = this.props;
 		this.setState({

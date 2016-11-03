@@ -19,6 +19,7 @@ class Trades extends React.Component {
 		super(props);
 		this.confirmTrade = this.confirmTrade.bind(this);
 		this.rejectTrade = this.rejectTrade.bind(this);
+		this.removeNotification = this.removeNotification.bind(this);
 	}
 	confirmTrade(trade) {
 		const { user } = this.props;
@@ -32,8 +33,11 @@ class Trades extends React.Component {
 		// dispatch decline action
 		this.props.decline(tradeData);
 	}
+	removeNotification(id) {
+		console.log(id);
+	}
 	render() {
-		const { receivedRequests, pendingRequests } = this.props.user;
+		const { receivedRequests, pendingRequests, notifications } = this.props.user;
 		const renderTrades = receivedRequests.map( (trade, idx) => {
 			return (
 				<div key = {idx} className = 'receivedRequests'>
@@ -53,8 +57,38 @@ class Trades extends React.Component {
 				</div>
 			)
 		});
+		const renderNotifications = notifications.map( (notification, idx) => {
+			return (
+				<div key = {idx}>
+					<h1>{notification.msg}
+						<i
+							onClick = {this.removeNotification.bind(this, notification.id)}
+							className = "fa fa-times"
+							aria-hidden = "true">
+						</i>
+					</h1>
+				</div>
+			);
+		});
 		return (
 			<div className = 'openTradesWrapper'>	
+
+				{
+
+					notifications.length > 0 ?
+						
+						<div>
+							<h1>Your Notifications:</h1>
+							{renderNotifications}
+						</div>
+
+						:
+
+						<div>
+							<h1>You have no notifications at the moment.</h1>
+						</div>
+
+				}
 
 				{
 

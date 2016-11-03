@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { checkCredentials } from '../actions/login'
 import { addBook, removeBook } from '../actions/books'
 
 @connect(
@@ -10,7 +9,6 @@ import { addBook, removeBook } from '../actions/books'
 		user: state.user
 	}),
 	dispatch => ({
-		checkCredentials: bindActionCreators(checkCredentials, dispatch),
 		addBook: bindActionCreators(addBook, dispatch),
 		removeBook: bindActionCreators(removeBook, dispatch)
 	})
@@ -20,7 +18,6 @@ class MyCollection extends React.Component {
 		addBook: React.PropTypes.func.isRequired,
 		user: React.PropTypes.object.isRequired
 	}
-	componentWillMount() { this.props.checkCredentials() }
 	componentDidMount() { window.addEventListener('keypress', this.handleKeypress) }
 	constructor() {
 		super();

@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { checkCredentials } from '../actions/login'
 import { retrieveAllBooks } from '../actions/books'
 import { requestBookTrade } from '../actions/books'
 
@@ -14,7 +13,6 @@ import TradeRequest from '../components/TradeRequest'
 		user: state.user
 	}),
 	dispatch => ({
-		checkCredentials: bindActionCreators(checkCredentials, dispatch),
 		getAllBooks: bindActionCreators(retrieveAllBooks, dispatch),
 		dispatchTrade: bindActionCreators(requestBookTrade, dispatch)
 	})
@@ -23,7 +21,7 @@ class ViewAll extends React.Component {
 	 static propTypes = {
 	 	books: React.PropTypes.array.isRequired
 	 }
-	 componentWillMount() { this.props.checkCredentials(); this.props.getAllBooks(); }
+	 componentWillMount() { this.props.getAllBooks(); }
 	 constructor(props) {
     super(props);
     this.state = {

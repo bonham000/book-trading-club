@@ -9,7 +9,8 @@ const defaultUser = {
 	location: '',
 	userBooks: [],
 	pendingRequests: [],
-	receivedRequests: []
+	receivedRequests: [],
+	notifications: []
 }
 
 const user = (state = defaultUser, action) => {
@@ -24,7 +25,8 @@ const user = (state = defaultUser, action) => {
 				location: action.user.location,
 				userBooks: action.user.userBooks,
 				pendingRequests: action.user.pendingRequests,
-				receivedRequests: action.user.receivedRequests
+				receivedRequests: action.user.receivedRequests,
+				notifications: action.user.notifications
 			});
 
 		case UPDATE_USER:

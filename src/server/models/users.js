@@ -16,7 +16,8 @@ var User = new Schema({
 	    location: String,
 	    userBooks: Array,
 	    pendingRequests: Array,
-	    receivedRequests: Array
+	    receivedRequests: Array,
+	    notifications: Array
 	  }
 });
 

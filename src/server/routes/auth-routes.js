@@ -49,7 +49,8 @@ app.post('/register', function(req, res) {
                       location: '',
                       userBooks: [],
                       pendingRequests: [],
-                      receivedRequests: []
+                      receivedRequests: [],
+                      notifications: []
                     }
                 });
                 user.save(function(err) {

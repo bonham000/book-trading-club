@@ -8,6 +8,7 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 import XMLConverter from 'xmljson'
+import uuid from 'uuid-v4'
 
 import User from '../models/users'
 
@@ -196,6 +197,14 @@ app.post('/accept-trade', (req, res) => {
 							return request.requestedBook.id !== requestedBook.id;
 						});
 						user.userData.pendingRequests = newPending;
+
+						const notification = {
+							id: uuid(),
+							msg: `${acceptingOwner} accepted your request for ${requestedBook.title}! It's now in your collection!`
+						}
+						let notificationsUpdate = user.userData.notifications.slice();
+						notificationsUpdate.push(notification);
+						user.userData.notifications = notificationsUpdate;
 						// save user updates
 						user.save(function(err) {if (err) throw err; });
 					}

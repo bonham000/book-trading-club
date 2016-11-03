@@ -36,7 +36,8 @@ passport.use(new GitHubStrategy({
               location: '',
               userBooks: [],
               pendingRequests: [],
-              receivedRequests: []
+              receivedRequests: [],
+              notifications: []
             }
         });
         user.save(function(err) {
