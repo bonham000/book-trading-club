@@ -1,15 +1,26 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { browserHistory, Link } from 'react-router'
+
+import BooksList from './BooksList'
+
+import { retrieveAllBooks } from '../actions/books'
 
 @connect(
 	state => ({
 		isAuthenticated: state.auth.isAuthenticated
+	}),
+	dispatch => ({
+		getAllBooks: bindActionCreators(retrieveAllBooks, dispatch)
 	})
 )
 class About extends React.Component {
 	 constructor(props) {
     super(props);
+  }
+  componentWillMount() {
+  	this.props.getAllBooks();
   }
  	render() {
  		return (
@@ -27,6 +38,8 @@ class About extends React.Component {
 					<h3 className = 'credits'><a target = "_blank" href = "https://github.com/bonham000/book-trading-club">View the source on GitHub</a></h3>
 					<h3 className = 'credits'>This app was created with React and Redux and is a <a target = "_blank" href = "https://www.freecodecamp.com/challenges/manage-a-book-trading-club">project for Free Code Camp</a>.</h3>
 					</div> }
+
+				<BooksList />
 
 		  </div>
 	  );

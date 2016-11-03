@@ -30,6 +30,19 @@ app.post('/api/protected', (req, res) => {
 	});
 });
 
+app.get('/get-all-books', (req, res) => {
+	MongoClient.connect(url, (err, db) => {
+		assert.equal(null, err)
+		db.collection('users').find().toArray( (err, collection) => {
+			const books = collection.map( (user) => {
+				return user.userData.userBooks;
+			});
+			res.status(201).send(books);
+			db.close();
+		});
+	});
+});
+
 // handles user add books to their account
 app.post('/add-book', (req, res) => {
 	const { title, userID, token } = req.body;
