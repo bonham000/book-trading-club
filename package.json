@@ -4,7 +4,8 @@
   "description": "User Authentication with a single-page React/Redux App",
   "main": "dist/server/index.js",
   "engines": {
-    "node": "6.8.1"
+    "node": "6.8.1",
+    "npm": "3.10.8"
   },
   "scripts": {
     "lint:server": "eslint src/server",
