@@ -36,7 +36,7 @@ class TradeRequest extends React.Component {
 					
 						<div>
 							<button className = 'submitBtn' onClick = {this.props.submitTrade}>Submit Trade</button>
-							<button className = 'cancelBtn' onClick = {this.props.cancelTrade}>Cancel Trade</button>	
+							<button className = 'cancelBtn' onClick = {this.props.cancelTrade}>Nevermind</button>	
 						</div>
 
 						:

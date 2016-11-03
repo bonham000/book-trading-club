@@ -116,6 +116,9 @@ app.post('/request-trade', (req, res) => {
 		if (err) {
 			res.status(401).send('You are unauthorized!');
 		} else {
+
+			// also need to set pending offer for offer owner in here
+
 			User.findOne({ id: reqBookOwner }, function(err, user) {
 				if (err) throw err;
 				else if (user) {
@@ -140,6 +143,48 @@ app.post('/request-trade', (req, res) => {
 		}
 	});
 });
+
+
+app.post('/accept-trade', (req, res) => {
+	const { offeredBook, requestedBook, requestingOwner, acceptingOwner, token } = req.body;
+	jwt.verify(token, secret, (err, decoded) => {
+		if (err) {
+			res.status(401).send('You are not authorized!');
+		} else {
+			console.log(offeredBook, requestedBook, requestingOwner, acceptingOwner);
+			res.send('accepted');
+			// for accept, remove the request and exchange the books in each user's data
+			// return new user data
+		}
+	});
+});
+
+
+app.post('/decline-trade', (req, res) => {
+	const { offeredBook, requestedBook, requestingOwner, acceptingOwner, token } = req.body;
+	jwt.verify(token, secret, (err, decoded) => {
+		if (err) {
+			res.status(401).send('You are not authorized!');
+		} else {
+			console.log(offeredBook, requestedBook, requestingOwner, acceptingOwner);
+			res.send('declined');
+			// for decline, simply remove the pending request for both users
+			// return new user data
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

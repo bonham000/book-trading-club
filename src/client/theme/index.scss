@@ -126,6 +126,17 @@ body {
 	}
 }
 
+.openTradesWrapper {
+	h1 {
+		border-bottom: 2px solid $blue;
+		padding-bottom: 15px;
+		margin-bottom: 35px;
+		padding-top: 25px;
+		width: 550px;
+		margin: auto;
+	}
+}
+
 .myCollection {
 	text-align: left;
 	width: 750px;

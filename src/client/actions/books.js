@@ -53,4 +53,24 @@ export function requestBookTrade(tradeInfo) {
 };
 
 
+export function acceptTrade(trade) {
+	return dispatch => {
+		axios.post('/accept-trade', trade).then( (response) => {
+			console.log(response.data)
+			// for accept receive new user data and upate local state
+			// and dispatch request to get all books for updated book ownership
+
+		}).catch(err => console.log(err));
+	}
+};
+
+export function declineTrade(trade) {
+	return dispatch => {
+		axios.post('/decline-trade', trade).then( (response) => {
+			console.log(response.data)
+			// for decline receive new user data and update local state
+
+		}).catch(err => console.log(err));
+	}
+};
 
