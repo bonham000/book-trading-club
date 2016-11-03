@@ -65,7 +65,6 @@ class ViewAll extends React.Component {
   		token: localStorage.getItem('id_token')
   	}
   	this.setState({ tradeSubmitted: true });
-  	console.log(trade);
   	// dispatch trade action to redux here
   	this.props.dispatchTrade(trade);
   }

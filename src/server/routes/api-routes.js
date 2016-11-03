@@ -224,9 +224,36 @@ app.post('/decline-trade', (req, res) => {
 		if (err) {
 			res.status(401).send('You are not authorized!');
 		} else {
-			res.send('declined');
-			// for decline, simply remove the pending request for both users
-			// return new user data
+			// for offer owner, remove pending request
+			User.findOne({ id: offerOwner}, function(err, user) {
+				if (err) throw err;
+				else if (user) {
+					let currPending = user.userData.pendingRequests;
+					let newPending = currPending.filter( (request) => {
+						return request.requestedBook.id !== requestedBook.id;
+					});
+					user.userData.pendingRequests = newPending;
+					user.save(function(err) {
+						if (err) throw err;
+					});
+				}
+			}).then( () => {
+				// for accepting owner, remove received request
+				User.findOne({ id: acceptingOwner }, function(err, user) {
+					if (err) throw err;
+					else if (user) {
+						let currRequests = user.userData.receivedRequests;
+						let newRequests = currRequests.filter( (request) => {
+							return request.requestedBook.id !== requestedBook.id;
+						});
+						user.userData.receivedRequests = newRequests;
+						user.save(function(err) {
+							if (err) throw err;
+							res.status(201).send(user);
+						});
+					}
+				}).catch(err => console.log(err));
+			});
 		}
 	});
 });

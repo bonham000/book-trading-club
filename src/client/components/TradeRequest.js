@@ -21,8 +21,8 @@ class TradeRequest extends React.Component {
 		return (
 			<div className = 'tradeRequest'>
 				<h1>Create Trade Request</h1>
-				<p>You are requesting {this.props.reqBook.title} by {this.props.reqBook.author}</p>
-				<p>Please select the book from your collection you would like to trade for this one.</p>
+				<p>You are requesting {this.props.reqBook.title} by {this.props.reqBook.author} from {this.props.reqBook.owner}.
+				 Please select the book from your collection you would like to trade for this one.</p>
 				
 				<select onChange = {this.props.selectOption.bind(this)}>
 					{renderOptions}
