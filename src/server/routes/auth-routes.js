@@ -7,6 +7,8 @@ import assert from 'assert'
 import Validator from 'validator'
 import validateUser from '../shared/validateUser'
 import uuid from 'uuid-v4'
+import dotenv from 'dotenv'
+dotenv.config()
 
 import User from '../models/users'
 

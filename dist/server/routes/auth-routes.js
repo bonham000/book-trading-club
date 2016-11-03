@@ -36,6 +36,10 @@ var _uuidV = require('uuid-v4');
 
 var _uuidV2 = _interopRequireDefault(_uuidV);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _users = require('../models/users');
 
 var _users2 = _interopRequireDefault(_users);
@@ -45,6 +49,8 @@ var _mongodb = require('mongodb');
 var _mongodb2 = _interopRequireDefault(_mongodb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_dotenv2.default.config();
 
 var url = process.env.MONGO_HOST;
 

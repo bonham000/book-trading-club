@@ -4,6 +4,8 @@ import GitHubStrategy from 'passport-github2'
 import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
 import uuid from 'uuid-v4'
+import dotenv from 'dotenv'
+dotenv.config()
 
 import User from '../models/users'
 
