@@ -228,21 +228,29 @@ body {
 		width: 550px;
 		margin: auto;
 	}
-	.receivedRequests {
-
+	.receivedRequests, .pendingRequests {
+		width: 650px;
+		margin: 15px auto;
+		background: rgba(20,20,20,0.05);
+		border: 1px solid rgba(25,25,25,0.25);
+		border-radius: 3px;
+		padding: 15px 12px;
+		p {
+			font-size: 22px;
+		}
+		h2 {
+			font-size: 24px;
+			margin: 7px auto;
+		}
 	}
-	.pendingRequests {
-		
-	}
-
 }
 
 // user's booklist component
 .myCollectionComponent {
-		.submission {
-			color: $pink;
-			margin-top: 7px;
-		}
+	.submission {
+		color: $pink;
+		margin-top: 7px;
+	}
 	.booksList {
 		text-align: left;
 		width: 750px;
@@ -382,6 +390,24 @@ body {
 }
 
 @media only screen and (max-width: 750px) {
+	.openTradesWrapper {
+		h1 {
+			width: 85vw;
+			font-size: 24px;
+		}
+		.receivedRequests, .pendingRequests {
+			width: 85vw;
+			p {
+				font-size: 20px;
+			}
+			h2 {
+				font-size: 22px;
+			}
+			button {
+				font-size: 20px;
+			}
+		}
+	}
 	.accountComponent {
 		h1 {
 			padding-bottom: 10px;

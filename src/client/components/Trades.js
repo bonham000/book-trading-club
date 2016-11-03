@@ -55,16 +55,40 @@ class Trades extends React.Component {
 		});
 		return (
 			<div className = 'openTradesWrapper'>	
-				
-				<div>
-					<h1>Requests to You:</h1>
-					{renderTrades}
-				</div>	
 
-				<div>
-					<h1>Requests You've Made:</h1>
-					{renderPending}
-				</div>		
+				{
+
+					receivedRequests.length > 0 ?
+						
+						<div>
+							<h1>Requests to You:</h1>
+							{renderTrades}
+						</div>
+
+						:
+
+						<div>
+							<h1>You have no requests at the moment.</h1>
+						</div>
+
+				}
+
+				{
+
+					pendingRequests.length > 0 ?
+
+						<div>
+							<h1>Requests You've Made:</h1>
+							{renderPending}
+						</div>
+
+						:
+
+						<div>
+							<h1>You have no pending requests at the moment.</h1>
+						</div>
+
+				}
 
 			</div>
 		);
