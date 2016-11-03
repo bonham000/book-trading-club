@@ -2,23 +2,21 @@ import React from 'react'
 
 class TradeRequest extends React.Component {
 	render() {
-		const renderOptions = this.props.books.map( (book, idx) => {
-			if (idx === 0) {
-				return (
-					<option
-						defaultValue = {book.id}
-						key = {idx} >
-						{book.title}
-					</option>
-				)
-			} else { return (
+		let firstOption = {
+			id: 1,
+			title: 'Select a Book'
+		}
+		let { books } = this.props;
+		let optionsList = [firstOption, ...books];
+
+		const renderOptions = optionsList.map( (book, idx) => {
+			  return (
 					<option
 						value = {book.id}
 						key = {idx} >
 						{book.title}
 					</option>
 				)
-			}
 		});
 		return (
 			<div className = 'tradeRequest'>

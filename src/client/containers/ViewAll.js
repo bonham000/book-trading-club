@@ -44,21 +44,24 @@ class ViewAll extends React.Component {
   	});
   }
   selectOption(event) { 
-  	let books = this.props.user.userBooks;
-  	const bookID = event.target.value;
-  	const book = books.filter( (book) => {
-  		return book.id === bookID;
-  	});
-  	this.setState({
-  		selectedOption: book[0]
-  	});
+  	if (event.target.value !== 1) {	
+	  	let books = this.props.user.userBooks;
+	  	const bookID = event.target.value;
+	  	const book = books.filter( (book) => {
+	  		return book.id === bookID;
+	  	});
+
+	  	this.setState({
+	  		selectedOption: book[0]
+	  	});
+	  }
   }
   submitTrade() {
   	const trade = {
-  		reqBook: this.state.reqBook,
-  		reqBookOwner: this.state.reqBook.owner,
-  		offerBook: this.state.selectedOption,
-  		owner: this.props.user.userID,
+  		offeredBook: this.state.selectedOption,
+  		offerOwner: this.props.user.userID,
+  		requestedBook: this.state.reqBook,
+  		acceptingOwner: this.state.reqBook.owner,
   		token: localStorage.getItem('id_token')
   	}
   	this.setState({ tradeSubmitted: true });
@@ -80,6 +83,7 @@ class ViewAll extends React.Component {
 					<div className = 'content'>
 						<h2>{book.title}</h2>
 						<p>by {book.author}</p>
+						<p>Owned by {book.owner}</p>
 						<button onClick = {this.requestTrade.bind(this, book)}>Request a Trade</button>
 					</div>
 				</div>

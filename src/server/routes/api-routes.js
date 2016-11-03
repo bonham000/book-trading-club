@@ -110,35 +110,50 @@ app.post('/update-user-info', (req, res) => {
 
 
 app.post('/request-trade', (req, res) => {
-	const { reqBook, reqBookOwner, offerBook, owner, token } = req.body;
+	const { offeredBook, offerOwner, requestedBook, acceptingOwner, token } = req.body;
 
 	jwt.verify(token, secret, (err, decoded) => {
 		if (err) {
 			res.status(401).send('You are unauthorized!');
 		} else {
-
-			// also need to set pending offer for offer owner in here
-
-			User.findOne({ id: reqBookOwner }, function(err, user) {
+			// update pending requests of current user
+			User.findOne({ id: offerOwner }, function(err, user) {
 				if (err) throw err;
 				else if (user) {
-					// set trade information to store for recipient
-					let currRequests = user.userData.pendingRequests;
-					
-					let newRequests = [...currRequests, 
+					let currPending = user.userData.pendingRequests;
+					let newPending = [...currPending,
 						{
-							requestedBook: reqBook,
-							requestingOwner: owner,
-							offeredBook: offerBook
+							requestedBook,
+							acceptingOwner,
+							offeredBook
 						}
 					];
-
-					user.userData.pendingRequests = newRequests;
+					user.userData.pendingRequests = newPending;
 					user.save(function(err) {
 						if (err) throw err;
-						else { res.status(201).send('Trade request submitted!')}
+						res.status(201).send({user});
 					});
 				}
+			}).then( () => {
+				// update user data of recipient user
+				User.findOne({ id: acceptingOwner }, function(err, user) {
+					if (err) throw err;
+					else if (user) {
+						// set trade information to store for recipient
+						let currRequests = user.userData.receivedRequests;
+						let newRequests = [...currRequests, 
+							{
+								requestedBook,
+								offerOwner,
+								offeredBook
+							}
+						];
+						user.userData.receivedRequests = newRequests;
+						user.save(function(err) {
+							if (err) throw err;
+						});
+					}
+				});
 			});
 		}
 	});
@@ -146,27 +161,69 @@ app.post('/request-trade', (req, res) => {
 
 
 app.post('/accept-trade', (req, res) => {
-	const { offeredBook, requestedBook, requestingOwner, acceptingOwner, token } = req.body;
+	let { offeredBook, requestedBook, offerOwner, acceptingOwner, token } = req.body;
+	offeredBook.owner = acceptingOwner;
+	requestedBook.owner = offerOwner;
 	jwt.verify(token, secret, (err, decoded) => {
 		if (err) {
 			res.status(401).send('You are not authorized!');
 		} else {
-			console.log(offeredBook, requestedBook, requestingOwner, acceptingOwner);
-			res.send('accepted');
-			// for accept, remove the request and exchange the books in each user's data
-			// return new user data
-		}
-	});
+			// Update user data for both sides of the trade
+			User.findOne({ id: offerOwner }, function(err, user) {
+					if (err) throw err;
+					else if (user) {
+						// update requesting user's book list
+						let books = user.userData.userBooks;
+						let filteredBooks = books.filter( (book) => {
+							return book.id !== offeredBook.id;
+						});
+						let updatedBooks = [...filteredBooks, requestedBook];
+						user.userData.userBooks = updatedBooks;
+						// update requesting user's pending requests
+						let currPending = user.userData.pendingRequests;
+						let newPending = currPending.filter( (request) => {
+							return request.requestedBook.id !== requestedBook.id;
+						});
+						user.userData.pendingRequests = newPending;
+						// save user updates
+						user.save(function(err) {if (err) throw err; });
+					}
+				}).then( () => {
+			User.findOne({ id: acceptingOwner }, function(err, user) {
+				if (err) throw err;
+				else if (user) {
+					// update accepting user's book list
+					let books = user.userData.userBooks;
+					let filteredBooks = books.filter( (book) => {
+						return book.id !== requestedBook.id;
+					});
+					let updatedBooks = [...filteredBooks, offeredBook];
+					user.userData.userBooks = updatedBooks;
+					// update accepting user's received requests
+					let currRequests = user.userData.receivedRequests;
+					let updatedRequests = currRequests.filter( (request) => {
+						return request.requestedBook.id !== requestedBook.id;
+					});
+					user.userData.receivedRequests = updatedRequests;
+					// save user updates
+					user.save(function(err) {
+						if (err) throw err;
+						res.status(201).send({ user });
+					});
+				}
+			});
+		}).catch(err => console.log(err));
+	}
+});
 });
 
 
 app.post('/decline-trade', (req, res) => {
-	const { offeredBook, requestedBook, requestingOwner, acceptingOwner, token } = req.body;
+	const { offeredBook, offerOwner, requestedBook, acceptingOwner, token } = req.body;
 	jwt.verify(token, secret, (err, decoded) => {
 		if (err) {
 			res.status(401).send('You are not authorized!');
 		} else {
-			console.log(offeredBook, requestedBook, requestingOwner, acceptingOwner);
 			res.send('declined');
 			// for decline, simply remove the pending request for both users
 			// return new user data

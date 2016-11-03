@@ -33,28 +33,38 @@ class Trades extends React.Component {
 		this.props.decline(tradeData);
 	}
 	render() {
-		const { pendingRequests } = this.props.user;
-		const renderTrades = pendingRequests.map( (trade, idx) => {
+		const { receivedRequests, pendingRequests } = this.props.user;
+		const renderTrades = receivedRequests.map( (trade, idx) => {
 			return (
 				<div key = {idx}>
-					<p>{trade.requestingOwner} is requesting {trade.requestedBook.title} in exchange for your copy of {trade.offeredBook.title}.</p>
+					<p>{trade.offerOwner} is requesting your copy of {trade.requestedBook.title} in exchange for {trade.offeredBook.title}.</p>
 					<h2>Would you like to accept?</h2>
 					<button onClick = {this.confirmTrade.bind(this, trade)}>Accept</button>
 					<button onClick = {this.rejectTrade.bind(this, trade)}>Decline</button>
 				</div>
 			);
 		});
+		const renderPending = pendingRequests.map( (request, idx) => {
+			return (
+				<div key = {idx}>
+					<h2>
+						You have requested {request.requestedBook.title} from {request.acceptingOwner} in exchange for {request.offeredBook.title}.
+					</h2>
+				</div>
+			)
+		});
 		return (
 			<div className = 'openTradesWrapper'>	
 				
 				<div>
-					<h1>Your Outstanding Requests:</h1>
+					<h1>Requests to You:</h1>
 					{renderTrades}
-				</div>
+				</div>	
 
 				<div>
-					<h1>Requests to You:</h1>
-				</div>			
+					<h1>Requests You've Made:</h1>
+					{renderPending}
+				</div>		
 
 			</div>
 		);

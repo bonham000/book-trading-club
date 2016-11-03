@@ -47,7 +47,7 @@ export function retrieveAllBooks() {
 export function requestBookTrade(tradeInfo) {
 	return dispatch => {
 		axios.post('/request-trade', tradeInfo).then( (response) => {
-			console.log(response.data);
+			dispatch(updateUser(response.data.user.userData));
 		}).catch(err => alert(err));
 	}
 };
@@ -56,9 +56,13 @@ export function requestBookTrade(tradeInfo) {
 export function acceptTrade(trade) {
 	return dispatch => {
 		axios.post('/accept-trade', trade).then( (response) => {
-			console.log(response.data)
-			// for accept receive new user data and upate local state
-			// and dispatch request to get all books for updated book ownership
+			console.log(response.data.userData)
+			if (response.status === 201) {
+				// for accept receive new user data and upate local state
+				// and dispatch request to get all books for updated book ownership
+				dispatch(updateUser(response.data.user.userData));
+				dispatch(retrieveAllBooks());
+			}
 
 		}).catch(err => console.log(err));
 	}
