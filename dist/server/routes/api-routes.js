@@ -24,15 +24,13 @@ var _jwtConfig = require('../jwt-config');
 
 var _jwtConfig2 = _interopRequireDefault(_jwtConfig);
 
-var _dev = require('./config/setup/dev');
+var _path = require('path');
 
-var _dev2 = _interopRequireDefault(_dev);
+var _path2 = _interopRequireDefault(_path);
 
-var _prod = require('./config/setup/prod');
+var _dotenv = require('dotenv');
 
-var _prod2 = _interopRequireDefault(_prod);
-
-var _env = require('./config/env');
+var _dotenv2 = _interopRequireDefault(_dotenv);
 
 var _xmljson = require('xmljson');
 
@@ -53,8 +51,8 @@ var _mongodb2 = _interopRequireDefault(_mongodb);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-// import dotenv from 'dotenv'
-// dotenv.config();
+
+_dotenv2.default.config({ path: __dirname + '/.env' });
 
 var MongoClient = _mongodb2.default.MongoClient;
 var url = process.env.MONGO_HOST;

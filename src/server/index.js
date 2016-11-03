@@ -10,8 +10,8 @@ import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 
-// import dotenv from 'dotenv'
-// dotenv.config();
+import dotenv from 'dotenv'
+dotenv.config({path: __dirname + '/.env'});
 
 const url = process.env.MONGO_HOST;
 

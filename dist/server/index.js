@@ -46,6 +46,10 @@ var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
@@ -64,8 +68,7 @@ var _passport4 = _interopRequireDefault(_passport3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import dotenv from 'dotenv'
-// dotenv.config();
+_dotenv2.default.config({ path: __dirname + '/.env' });
 
 var url = process.env.MONGO_HOST;
 

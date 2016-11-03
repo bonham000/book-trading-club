@@ -4,12 +4,10 @@ import assert from 'assert'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
-// import dotenv from 'dotenv'
-// dotenv.config();
 
-import devConfig from './config/setup/dev'
-import prodConfig from './config/setup/prod'
-import { NODE_ENV, PORT } from './config/env'
+import path from 'path'
+import dotenv from 'dotenv'
+dotenv.config({path: __dirname + '/.env'});
 
 import XMLConverter from 'xmljson'
 import uuid from 'uuid-v4'
