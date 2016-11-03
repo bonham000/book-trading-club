@@ -7,7 +7,7 @@ import { retrieveAllBooks } from './books'
 // import host urls
 import { DEV_HOST_URL, PROD_HOST_URL } from '../constants/host'
 // set host for routes
-const HOST_URL = DEV_HOST_URL;
+const HOST_URL = PROD_HOST_URL;
 
 // There are three possible states for our login process and we need actions for each of them
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'

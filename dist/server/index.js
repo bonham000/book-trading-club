@@ -95,7 +95,7 @@ var secretString = process.env.SECRET_STRING;
 
 app.use((0, _cookieParser2.default)(secretString));
 app.use((0, _expressSession2.default)({
-  secret: 'super secret key',
+  secret: secretString,
   resave: true,
   secure: false,
   saveUninitialized: true
