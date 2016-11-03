@@ -12,7 +12,7 @@ import { addBook } from '../actions/books'
 		addBook: bindActionCreators(addBook, dispatch)
 	})
 )
-class AddBook extends React.Component {
+class MyCollection extends React.Component {
 	static propTypes = {
 		addBook: React.PropTypes.func.isRequired,
 		user: React.PropTypes.object.isRequired
@@ -45,8 +45,8 @@ class AddBook extends React.Component {
 	render() {
 		const renderBooks = this.props.user.userBooks.map( (book, idx) => {
 			return (
-				<div key = {idx}>
-					<p>{book.title}</p>
+				<div key = {idx} className = 'myCollection'>
+					<p>{book.title} by {book.author}</p>
 				</div>
 			);
 		});
@@ -67,4 +67,4 @@ class AddBook extends React.Component {
 	}
 };
 
-export default AddBook;
+export default MyCollection;

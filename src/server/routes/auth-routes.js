@@ -91,33 +91,25 @@ app.post('/sessions/create', function(req, res) {
 
   const { email, password } = req.body;
 
-  MongoClient.connect(url, (err, db) => {
-    assert.equal(null, err);
-
-    const Users = db.collection('users');
-    
-    Users.findOne( { id: email }).then( (data) => {
-      // user does not exist in database
-      if (data === null) {
-        console.log('User does not exist');
-        res.status(401).send('User does not exist');
-        db.close();
-      }
-      // if user exists check if password is valid
-      // if it is return user data and authentication credentials
-      else if (bcrypt.compareSync(password, data.password)) {
+  User.findOne({ id: email }, function(err, user) {
+    if (err) throw err;
+    else if (user) {
+      if (bcrypt.compareSync(password, user.password)) {
         res.status(201).send({
-          id_token: createToken(data.username),
-          username: data.username,
-          userData: data.userData
+          id_token: createToken(user.username),
+          username: user.username,
+          userData: user.userData
         });
-        db.close();
+      } else {
+        res.status(401).send('Invalied credentials!');
       }
-      // user exists but password was invalid
-      else {
-        res.status(401).send('Invalid login attempt')
-        db.close();
-      }
-    });
+
+    } else {
+      res.status(404).send('There is no user with this email!');
+    }
   });
 });
+
+
+
+

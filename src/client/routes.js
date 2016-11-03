@@ -4,7 +4,7 @@ import App from './containers/App'
 import About from './components/About'
 
 import Dashboard from './containers/Dashboard'
-import AddBook from './containers/AddBook'
+import MyCollection from './containers/MyCollection'
 import ViewAll from './containers/ViewAll'
 import Account from './containers/Account'
 
@@ -16,7 +16,7 @@ export default (
   <Route name = 'home' component = {App}>
   	<Route path = '/' name = 'about' component = {About} />
   	<Route path = 'dashboard' name = 'dashboard' component = {Dashboard} />
-  	<Route path = 'add-book' name = 'add-book' component = {AddBook} />
+  	<Route path = 'my-collection' name = 'my-collection' component = {MyCollection} />
   	<Route path = 'view-all' name = 'view-all' component = {ViewAll} />
   	<Route path = 'my-account' name = 'my-account' component = {Account} />
   	<Route path = 'login' name = 'login' component = {LoginPage} />

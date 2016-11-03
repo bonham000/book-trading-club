@@ -21,7 +21,7 @@ class Navbar extends Component {
             { isAuthenticated &&
               <Link to = 'dashboard' className = 'navLink' activeClassName = 'activeRoute'>Dashboard</Link> }
             { isAuthenticated &&
-              <Link to = 'add-book' className = 'navLink' activeClassName = 'activeRoute'>Add Book</Link> }
+              <Link to = 'my-collection' className = 'navLink' activeClassName = 'activeRoute'>My Books</Link> }
             { isAuthenticated && 
               <Link to = 'view-all' className = 'navLink' activeClassName = 'activeRoute'>View All Books</Link> }
             { isAuthenticated &&

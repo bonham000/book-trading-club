@@ -2,6 +2,7 @@ import axios from 'axios'
 import { browserHistory } from 'react-router'
 
 import { initializeUser } from './user'
+import { retrieveAllBooks } from './books'
 
 // There are three possible states for our login process and we need actions for each of them
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
@@ -51,6 +52,7 @@ export function checkAuth() {
           // initialize user in Redux store
           dispatch(receiveLogin(user))
           dispatch(initializeUser(user.userData))
+          dispatch(retrieveAllBooks())
 
           browserHistory.push('/dashboard');
         }
@@ -69,11 +71,10 @@ export function loginUser(creds) {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return axios.post('http://127.0.0.1:3000/sessions/create', creds).then ( (res) => {
+    return axios.post('http://127.0.0.1:3000/sessions/create', creds).then( (response) => {
       
-      if (res.status === 201) {
-
-          const user = res.data;
+      if (response.status === 201) {
+          const user = response.data;
 
           // If login was successful, set the token in local storage
           localStorage.setItem('user', user.user)
@@ -83,6 +84,8 @@ export function loginUser(creds) {
           // initialize user in Redux store
           dispatch(receiveLogin(user))
           dispatch(initializeUser(user.userData))
+
+          dispatch(retrieveAllBooks())
 
           browserHistory.push('/dashboard');
         }
@@ -137,6 +140,7 @@ export function registerUser(user) {
       // initialize user in Redux store
       dispatch(receiveLogin(user))
       dispatch(initializeUser(res.data.userData))
+      dispatch(retrieveAllBooks())
 
     }).then( () => {
       // User is redirected to the home page

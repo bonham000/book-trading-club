@@ -19,9 +19,7 @@ class About extends React.Component {
 	 constructor(props) {
     super(props);
   }
-  componentWillMount() {
-  	this.props.getAllBooks();
-  }
+  componentWillMount() { this.props.getAllBooks() }
  	render() {
  		return (
 		  <div className = 'aboutWrapper'>

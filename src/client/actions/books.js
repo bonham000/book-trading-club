@@ -9,6 +9,7 @@ export function addBook(data) {
 			const user = response.data;
 			// update returned user data in store
 			dispatch(updateUser(user));
+			dispatch(retrieveAllBooks())
 		}).catch(err => console.log(err));
 	}
 };
@@ -21,7 +22,6 @@ function setAllBooks(books) {
 		books
 	}
 }
-
 
 function flatten(array) {
 	let flatList = [];
@@ -42,3 +42,15 @@ export function retrieveAllBooks() {
 		}).catch(err => console.log(err));
 	}
 };
+
+
+export function requestBookTrade(tradeInfo) {
+	return dispatch => {
+		axios.post('/request-trade', tradeInfo).then( (response) => {
+			console.log(response.data);
+		}).catch(err => alert(err));
+	}
+};
+
+
+

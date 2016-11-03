@@ -60,8 +60,10 @@ app.post('/add-book', (req, res) => {
 						const book = {
 							id: bookData.id,
 							title: bookData.title,
-							author: bookData.author,
-							image: bookData.author
+							author: bookData.author.name,
+							image: bookData.image_url,
+							smallImage: bookData.small_image_url,
+							owner: userID
 						}
 						// find user in database and update them with the new book
 						User.findOne({ id: userID }, function(err, user) {
@@ -104,3 +106,41 @@ app.post('/update-user-info', (req, res) => {
 		}
 	});
 });
+
+
+
+app.post('/request-trade', (req, res) => {
+	const { reqBook, reqBookOwner, offerBook, owner, token } = req.body;
+
+	jwt.verify(token, secret, (err, decoded) => {
+		if (err) {
+			res.status(401).send('You are unauthorized!');
+		} else {
+			User.findOne({ id: reqBookOwner }, function(err, user) {
+				if (err) throw err;
+				else if (user) {
+					// set trade information to store for recipient
+					let currRequests = user.userData.pendingRequests;
+					
+					let newRequests = [...currRequests, 
+						{
+							requestedBook: reqBook,
+							requestingOwner: owner,
+							offeredBook: offerBook
+						}
+					];
+
+					user.userData.pendingRequests = newRequests;
+					user.save(function(err) {
+						if (err) throw err;
+						else { res.status(201).send('Trade request submitted!')}
+					});
+				}
+			});
+		}
+	});
+});
+
+
+
+

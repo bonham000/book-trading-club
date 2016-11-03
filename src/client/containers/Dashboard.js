@@ -13,7 +13,6 @@ class Dashboard extends React.Component {
  		return (
 		  <div className = 'dashboardComponent'>
 				<Trades />
-				<BooksList />
 		  </div>
 	  );
  	}
