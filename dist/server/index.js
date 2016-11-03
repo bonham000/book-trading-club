@@ -119,7 +119,7 @@ app.use(_apiRoutes2.default);
 
 app.use((0, _expressHistoryApiFallback2.default)(_path2.default.join(__dirname, '../../dist/client/index.html')));
 
-app.listen(_env.PORT, function (err) {
+app.listen(process.env.PORT || 8000, function (err) {
   if (err) throw err;
   console.log('The Express Server is Listening at port ' + _env.PORT + ' in ' + _env.NODE_ENV + ' mode');
 });
