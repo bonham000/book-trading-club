@@ -14,11 +14,10 @@ import { addBook } from '../actions/books'
 )
 class AddBook extends React.Component {
 	static propTypes = {
-		addBook: React.PropTypes.func.isRequired
+		addBook: React.PropTypes.func.isRequired,
+		user: React.PropTypes.object.isRequired
 	}
-	componentDidMount() {
-		window.addEventListener('keypress', this.handleKeypress);
-	}
+	componentDidMount() { window.addEventListener('keypress', this.handleKeypress) }
 	constructor() {
 		super();
 		this.state = {
@@ -44,6 +43,13 @@ class AddBook extends React.Component {
 		}
 	}
 	render() {
+		const renderBooks = this.props.user.userBooks.map( (book, idx) => {
+			return (
+				<div key = {idx}>
+					<p>{book.title}</p>
+				</div>
+			);
+		});
 		return (
 			<div>
 				<h1>Add a New Book to Your Collection</h1>
@@ -54,7 +60,8 @@ class AddBook extends React.Component {
 					value = {this.state.title}
 					onChange = {this.handleChange} /><br />
 				<button onClick = {this.addBook}>Search and Add Book</button>
-				<p>Your Current Collection:</p>
+				<h1>Your Current Collection:</h1>
+				{renderBooks}
 			</div>
 		);
 	}

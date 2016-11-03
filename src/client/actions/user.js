@@ -15,7 +15,7 @@ export function initializeUser(user) {
 	}
 }
 
-function updateUser(userData) {
+export function updateUser(userData) {
 	return {
 		type: UPDATE_USER,
 		user: userData

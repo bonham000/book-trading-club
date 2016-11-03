@@ -26,63 +26,53 @@ app.post('/api/protected', (req, res) => {
 				 	res.end();
 					db.close();
 				});
-		}
-		else {
-			res.status(401).send('Token invalid, request denied.');
-		}
+		} else { res.status(401).send('Token invalid, request denied.') }
 	});
 });
 
+// handles user add books to their account
 app.post('/add-book', (req, res) => {
 	const { title, userID, token } = req.body;
-
+	// verify user is authenticated
 	jwt.verify(token, secret, (err, decoded) => {
 		if (!err) {
+			// call Goodreads API to retrieve book data from user query
 			axios.get(`https://www.goodreads.com/search/index.xml?key=${process.env.GOODREADS_KEY}&q=${title}`).then( (response) => {
 				let result = response.data;
+				// convert response to JSON
 				XMLConverter.to_json(result, (err, data) => {
 					if (!err) {
-
+						// parse response data into a better object to return to client
 						const bookData = data.GoodreadsResponse.search.results.work[0].best_book
-
 						const book = {
 							id: bookData.id,
 							title: bookData.title,
 							author: bookData.author,
 							image: bookData.author
 						}
-
-						console.log(book);
-
+						// find user in database and update them with the new book
 						User.findOne({ id: userID }, function(err, user) {
 							if (err) throw err;
 							else if (user) {
 								let books = [...user.userData.userBooks, book]
 								user.userData.userBooks = books;
-								console.log(books);
 								user.save(function(err) {
 									if (err) throw err;
+									// update client by returning user
 									else { res.status(201).send(user.userData) }
 								});
 							}
 						});
-
 					}
 				});
 			}).catch(err => console.log(err));
-		}
-		else {
-			res.status(401).send('You are not authorized!');
-		}
-
+		} else { res.status(401).send('You are not authorized!') }
 	});
-
 });
 
+// handles user updating location and full name
 app.post('/update-user-info', (req, res) => {
-
 	const { userID, fullName, location, token } = req.body;
-
 	jwt.verify(token, secret, (err, decoded) => {
 		if (err) {
 			res.status(401).send('You are not a valid user!');
