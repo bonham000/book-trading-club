@@ -34,10 +34,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _dotenv = require('dotenv');
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
-
 var _expressSession = require('express-session');
 
 var _expressSession2 = _interopRequireDefault(_expressSession);
@@ -68,7 +64,8 @@ var _passport4 = _interopRequireDefault(_passport3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dotenv2.default.config();
+// import dotenv from 'dotenv'
+// dotenv.config();
 
 var url = process.env.MONGO_HOST;
 
