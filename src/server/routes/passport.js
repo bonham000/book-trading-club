@@ -11,13 +11,11 @@ const app = module.exports = express.Router();
 
 function createToken(username) { return jwt.sign({user: username}, secret, { expiresIn: 60 * 60 }) }
 
-// "http://127.0.0.1:3000/auth/github/callback"
-
 // define GitHub strategy
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK_URL
+    callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
   },
   function(accessToken, refreshToken, profile, done) {
     // search for user in database base on id = GitHub email address as unique identification
