@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import { acceptTrade } from '../actions/books'
 import { declineTrade } from '../actions/books'
+import { removeNotification } from '../actions/user'
 
 @connect(
 	state => ({
@@ -11,7 +12,8 @@ import { declineTrade } from '../actions/books'
 	}),
 	dispatch => ({
 		accept: bindActionCreators(acceptTrade, dispatch),
-		decline: bindActionCreators(declineTrade, dispatch)
+		decline: bindActionCreators(declineTrade, dispatch),
+		removeNotification: bindActionCreators(removeNotification, dispatch)
 	})
 )
 class Trades extends React.Component {
@@ -34,7 +36,12 @@ class Trades extends React.Component {
 		this.props.decline(tradeData);
 	}
 	removeNotification(id) {
-		console.log(id);
+		const data = {
+			notificationID: id,
+			userID: this.props.user.userID,
+			token: localStorage.getItem('id_token')
+		}
+		this.props.removeNotification(data);
 	}
 	render() {
 		const { receivedRequests, pendingRequests, notifications } = this.props.user;
@@ -59,14 +66,14 @@ class Trades extends React.Component {
 		});
 		const renderNotifications = notifications.map( (notification, idx) => {
 			return (
-				<div key = {idx}>
-					<h1>{notification.msg}
+				<div key = {idx} className = 'notifications'>
+					<p>{notification.msg}
 						<i
 							onClick = {this.removeNotification.bind(this, notification.id)}
 							className = "fa fa-times"
 							aria-hidden = "true">
 						</i>
-					</h1>
+					</p>
 				</div>
 			);
 		});

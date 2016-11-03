@@ -119,8 +119,6 @@ app.post('/update-user-info', (req, res) => {
 	});
 });
 
-
-
 app.post('/request-trade', (req, res) => {
 	const { offeredBook, offerOwner, requestedBook, acceptingOwner, token } = req.body;
 
@@ -197,7 +195,7 @@ app.post('/accept-trade', (req, res) => {
 							return request.requestedBook.id !== requestedBook.id;
 						});
 						user.userData.pendingRequests = newPending;
-
+						// create a notification for the trade confirmation
 						const notification = {
 							id: uuid(),
 							msg: `${acceptingOwner} accepted your request for ${requestedBook.title}! It's now in your collection!`
@@ -237,7 +235,6 @@ app.post('/accept-trade', (req, res) => {
 });
 });
 
-
 app.post('/decline-trade', (req, res) => {
 	const { offeredBook, offerOwner, requestedBook, acceptingOwner, token } = req.body;
 	jwt.verify(token, secret, (err, decoded) => {
@@ -253,6 +250,16 @@ app.post('/decline-trade', (req, res) => {
 						return request.requestedBook.id !== requestedBook.id;
 					});
 					user.userData.pendingRequests = newPending;
+
+					// create a notification for the trade rejection
+					const notification = {
+						id: uuid(),
+						msg: `${acceptingOwner} rejected your request for ${requestedBook.title}! Too bad!`
+					}
+					let notificationsUpdate = user.userData.notifications.slice();
+					notificationsUpdate.push(notification);
+					user.userData.notifications = notificationsUpdate;
+
 					user.save(function(err) {
 						if (err) throw err;
 					});
@@ -278,7 +285,37 @@ app.post('/decline-trade', (req, res) => {
 	});
 });
 
+app.post('/remove-notification', (req, res) => {
 
+	const { token, notificationID, userID } = req.body;
+
+	jwt.verify(token, secret, (err, decoded) => {
+		if (err) {
+			res.status(401).send('You are not authorized!');
+		} else {
+
+			// find user
+			User.findOne({ id: userID }, function(err, user) {
+				if (err) throw err;
+				else if (user) {
+					// update notifcations, removing the selected one
+					let { notifications } = user.userData;
+					let newNotifications = notifications.filter( (notification) => {
+						return notification.id !== notificationID;
+					});
+					user.userData.notifications = newNotifications;
+					user.save(function(err) {
+						if (err) throw err;
+						// return updated user data to client
+						res.status(201).send(user.userData);;
+					});
+				}
+			});
+
+		}
+	});
+
+});
 
 
 

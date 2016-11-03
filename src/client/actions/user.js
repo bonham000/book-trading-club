@@ -38,3 +38,11 @@ export function removeUserDetails() {
 		type: REMOVE_USER
 	}
 }
+
+export function removeNotification(data) {
+	return dispatch => {
+		axios.post('/remove-notification', data).then( (res) => {
+			dispatch(updateUser(res.data));
+		}).catch(err => { console.log(err) });
+	}
+}

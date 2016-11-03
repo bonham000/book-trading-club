@@ -6,6 +6,7 @@ import secret from '../jwt-config'
 import assert from 'assert'
 import Validator from 'validator'
 import validateUser from '../shared/validateUser'
+import uuid from 'uuid-v4'
 
 import User from '../models/users'
 
@@ -98,15 +99,54 @@ app.post('/sessions/create', function(req, res) {
       if (bcrypt.compareSync(password, user.password)) {
 
         // check received requests for any books user no longer has and remove these requests from their data
-        let { userBooks, receivedRequests } = user.userData;
-
-        // this block of code checks the user's data for received requests for books it no longer owns
-        // if a book is found, the received request is removed, and then the pending request for the
-        // offer owner of that request is found and removed as well
+        let { userBooks, receivedRequests, pendingRequests } = user.userData;
 
         // this check is executed whenever a user logs in either directly (here) or through passport
-        
-        function testCollection(books, request) {
+
+        // this block of code checks the user's data for received and pending requests for books it no longer owns
+        // if a book is found, the received request is removed, and then the pending request for the
+        // offer owner of that request is found and removed as well, conversely, if there is a pending request
+        // with an offer book the user no longer owns, the request is removed for both users
+
+        // handle pending requests
+        function testPendingRequests(books, offer) {
+          let testBooks = books.filter( (book) => { return book.id === offer.offeredBook.id; });
+          if (testBooks.length > 0) { return true; }
+          else {
+            let acceptingOwner = offer.acceptingOwner;
+            // find offer owner in database and remove pending offered from their data
+            User.findOne({ id: acceptingOwner }, function(err, user) {
+              if (err) throw err;
+              else if (user) {
+                let { receivedRequests } = user.userData;
+                let newRequests = receivedRequests.filter( (receivedRequest) => {
+                  return receivedRequest.requestedBook.id !== offer.requestedBook.id;
+                });
+                // update pending requests of offer owner
+                user.userData.receivedRequests = newRequests;
+
+                const notification = {
+                  id: uuid(),
+                  msg: `${email} no longer owns ${offer.offeredBook.title} which they offered to trade you, so the trade has been removed.`
+                }
+                let notificationsUpdate = user.userData.notifications.slice();
+                notificationsUpdate.push(notification);
+                user.userData.notifications = notificationsUpdate;
+
+                user.save(function(err) {
+                  if (err) throw err;
+                });
+              }
+            });
+            return false;
+          }
+        }
+
+        let newPending = pendingRequests.filter( (request) => { return testPendingRequests(userBooks, request) });
+        user.userData.pendingRequests = newPending;
+
+        // handle received requests
+        function testReceivedRequests(books, request) {
           let testBooks = books.filter( (book) => { return book.id === request.requestedBook.id; });
           if (testBooks.length > 0) { return true; }
           else {
@@ -121,6 +161,15 @@ app.post('/sessions/create', function(req, res) {
                 });
                 // update pending requests of offer owner
                 user.userData.pendingRequests = newPending;
+                
+                const notification = {
+                  id: uuid(),
+                  msg: `${request.offeredBook.owner} no longer owns ${request.offeredBook.title} which they offered to trade you, so the trade has been removed.`
+                }
+                let notificationsUpdate = user.userData.notifications.slice();
+                notificationsUpdate.push(notification);
+                user.userData.notifications = notificationsUpdate;
+
                 user.save(function(err) {
                   if (err) throw err;
                 });
@@ -130,7 +179,7 @@ app.post('/sessions/create', function(req, res) {
           }
         }
         
-        let newRequests = receivedRequests.filter( (request) => { return testCollection(userBooks, request) });
+        let newRequests = receivedRequests.filter( (request) => { return testReceivedRequests(userBooks, request) });
         // update recevied requests for user for them to see updated information upon login
         user.userData.receivedRequests = newRequests;
         user.save(function(err) { if (err) throw err; });

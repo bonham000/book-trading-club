@@ -26,7 +26,8 @@ class ViewAll extends React.Component {
     super(props);
     this.state = {
     	tradeOpen: false,
-    	tradeSubmitted: false
+    	tradeSubmitted: false,
+    	selectOption: 0
     }
     this.toggleTradeMenu = this.toggleTradeMenu.bind(this);
     this.requestTrade = this.requestTrade.bind(this);
@@ -42,6 +43,7 @@ class ViewAll extends React.Component {
   	this.setState({
   		reqBook: book
   	});
+  	window.scrollTo(0, 0);
   }
   selectOption(event) { 
   	if (event.target.value !== 1) {	
@@ -57,16 +59,18 @@ class ViewAll extends React.Component {
 	  }
   }
   submitTrade() {
-  	const trade = {
-  		offeredBook: this.state.selectedOption,
-  		offerOwner: this.props.user.userID,
-  		requestedBook: this.state.reqBook,
-  		acceptingOwner: this.state.reqBook.owner,
-  		token: localStorage.getItem('id_token')
-  	}
-  	this.setState({ tradeSubmitted: true });
-  	// dispatch trade action to redux here
-  	this.props.dispatchTrade(trade);
+  	if (this.state.selectedOption !== 0) {		
+	  	const trade = {
+	  		offeredBook: this.state.selectedOption,
+	  		offerOwner: this.props.user.userID,
+	  		requestedBook: this.state.reqBook,
+	  		acceptingOwner: this.state.reqBook.owner,
+	  		token: localStorage.getItem('id_token')
+	  	}
+	  	this.setState({ tradeSubmitted: true, selectedOption: 0 });
+	  	// dispatch trade action to redux here
+	  	this.props.dispatchTrade(trade);
+	  }
   }
  	render() {
  		const { books } = this.props;
