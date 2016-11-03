@@ -7,8 +7,12 @@ import assert from 'assert'
 import Validator from 'validator'
 import validateUser from '../shared/validateUser'
 import uuid from 'uuid-v4'
-import dotenv from 'dotenv'
-dotenv.config()
+// import dotenv from 'dotenv'
+// dotenv.config()
+
+import devConfig from './config/setup/dev'
+import prodConfig from './config/setup/prod'
+import { NODE_ENV, PORT } from './config/env'
 
 import User from '../models/users'
 

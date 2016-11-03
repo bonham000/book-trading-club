@@ -6,12 +6,12 @@ import devConfig from './config/setup/dev'
 import prodConfig from './config/setup/prod'
 import { NODE_ENV, PORT } from './config/env'
 import bodyParser from 'body-parser'
-import dotenv from 'dotenv'
 import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 
-dotenv.config();
+// import dotenv from 'dotenv'
+// dotenv.config();
 
 const url = process.env.MONGO_HOST;
 
