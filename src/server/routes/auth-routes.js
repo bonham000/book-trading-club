@@ -10,10 +10,6 @@ import uuid from 'uuid-v4'
 
 import User from '../models/users'
 
-import mongodb from 'mongodb'
-const MongoClient = mongodb.MongoClient;
-const url = process.env.MONGO_HOST;
-
 const app = module.exports = express.Router();
 
 // create a jwt token for authenticated users

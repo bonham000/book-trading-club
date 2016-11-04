@@ -11,7 +11,6 @@ import cookieParser from 'cookie-parser'
 import passport from 'passport'
 
 const MONGO_HOST = process.env.MONGO_HOST;
-
 import mongoose from 'mongoose'
 
 import authRoutes from './routes/auth-routes'

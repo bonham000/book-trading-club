@@ -40,14 +40,7 @@ var _users = require('../models/users');
 
 var _users2 = _interopRequireDefault(_users);
 
-var _mongodb = require('mongodb');
-
-var _mongodb2 = _interopRequireDefault(_mongodb);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var MongoClient = _mongodb2.default.MongoClient;
-var url = process.env.MONGO_HOST;
 
 var app = module.exports = _express2.default.Router();
 
