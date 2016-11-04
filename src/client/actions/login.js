@@ -145,7 +145,7 @@ export function registerUser(user) {
     dispatch(newSignUp(user))
 
     // Request is made to the server with the registration data
-    return axios.post(host_url + '/register', user).then( (res) => {
+    return axios.post(HOST_URL + '/register', user).then( (res) => {
 
       let user = {
         user: res.data.username,
