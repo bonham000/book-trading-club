@@ -5,8 +5,6 @@ import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
 
-import { MONGO_HOST } from '../index'
-
 import XMLConverter from 'xmljson'
 import uuid from 'uuid-v4'
 
@@ -14,7 +12,7 @@ import User from '../models/users'
 
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
-const url = process.env.MONGO_HOST;
+const MONGO_HOST = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 

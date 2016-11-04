@@ -24,8 +24,6 @@ var _jwtConfig = require('../jwt-config');
 
 var _jwtConfig2 = _interopRequireDefault(_jwtConfig);
 
-var _index = require('../index');
-
 var _xmljson = require('xmljson');
 
 var _xmljson2 = _interopRequireDefault(_xmljson);
@@ -47,12 +45,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var MongoClient = _mongodb2.default.MongoClient;
-var url = process.env.MONGO_HOST;
+var MONGO_HOST = process.env.MONGO_HOST;
 
 var app = module.exports = _express2.default.Router();
 
 app.get('/get-all-books', function (req, res) {
-	MongoClient.connect(_index.MONGO_HOST, function (err, db) {
+	MongoClient.connect(MONGO_HOST, function (err, db) {
 		_assert2.default.equal(null, err);
 		db.collection('users').find().toArray(function (err, collection) {
 			var books = collection.map(function (user) {
