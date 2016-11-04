@@ -463,15 +463,14 @@ body {
 			font-size: 18px;
 			border: 1px solid black;
 			option {
-				font-size: 14px;
+				font-size: 18px;
 			}
 		}
 	  button {
-	  	font-size: 16px;
+	  	font-size: 22px;
 			margin: 10px;
-			margin-left: 5px;
 			padding: 7px 12px;
-			width: 65vw;
+			width: 70vw;
 	  }
 	}
 	.myCollectionComponent {
@@ -516,25 +515,27 @@ body {
 			.image {
 				width: 100px;
 				height: auto;
-				padding-left: 7px;
+				padding-left: 15px;
 			}
 			.content {
-				width: 55vw;
+				width: 50vw;
 				height: 200px;
-				padding-left: 12px;
-				margin-left: 25px;
+				padding-left: 8px;
+				padding-top: 5px;
+				margin-left: 35px;
 				text-align: left;
 				h2 {
 					margin: 3px;
 					font-size: 18px;
-					width: 50vw;
+					width: 45vw;
 				}
 				p {
 					margin: 2px;
-					font-size: 16px;
+					font-size: 12px;
 				}
 				button {
-					font-size: 22px;
+					font-size: 18px;
+					margin-left: 0;
 				}
 			}
 		}
@@ -551,7 +552,7 @@ body {
 				width: 50vw;
 				height: 150px;
 				text-align: left;
-				padding-left: 15px;
+				padding-left: 5px;
 				margin-left: 30px;
 				h2 {
 					margin: 3px;
