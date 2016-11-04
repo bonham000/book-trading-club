@@ -54,7 +54,7 @@ var _mongodb2 = _interopRequireDefault(_mongodb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dotenv2.default.config({ path: __dirname + '../.env' });
+_dotenv2.default.config({ path: __dirname + '/.env' });
 
 var url = process.env.MONGO_HOST;
 

@@ -9,7 +9,7 @@ import validateUser from '../shared/validateUser'
 import uuid from 'uuid-v4'
 import path from 'path'
 import dotenv from 'dotenv'
-dotenv.config({path: __dirname + '../.env'});
+dotenv.config({path: __dirname + '/.env'});
 
 import User from '../models/users'
 

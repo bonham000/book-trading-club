@@ -7,7 +7,7 @@ import secret from '../jwt-config'
 
 import path from 'path'
 import dotenv from 'dotenv'
-dotenv.config({path: __dirname + '../.env'});
+dotenv.config({path: __dirname + '/.env'});
 
 import XMLConverter from 'xmljson'
 import uuid from 'uuid-v4'
