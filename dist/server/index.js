@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.GITHUB_CALLBACK_URL_PROD = exports.GITHUB_CLIENT_SECRET = exports.GITHUB_CLIENT_ID = exports.MONGO_HOST = undefined;
 
 var _express = require('express');
 
@@ -70,7 +71,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _dotenv2.default.config({ path: __dirname + '/.env' });
 
-var url = process.env.MONGO_HOST;
+var MONGO_HOST = exports.MONGO_HOST = process.env.MONGO_HOST;
+var GITHUB_CLIENT_ID = exports.GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+var GITHUB_CLIENT_SECRET = exports.GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+var GITHUB_CALLBACK_URL_PROD = exports.GITHUB_CALLBACK_URL_PROD = process.env.GITHUB_CALLBACK_URL_PROD;
 
 var app = (0, _express2.default)();
 

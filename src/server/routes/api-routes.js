@@ -5,9 +5,7 @@ import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
 
-import path from 'path'
-import dotenv from 'dotenv'
-dotenv.config({path: __dirname + '/.env'});
+import { MONGO_HOST } from '../index'
 
 import XMLConverter from 'xmljson'
 import uuid from 'uuid-v4'
@@ -16,12 +14,12 @@ import User from '../models/users'
 
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
-const url = process.env.MONGO_HOST;
+//const url = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 
 app.get('/get-all-books', (req, res) => {
-	MongoClient.connect(url, (err, db) => {
+	MongoClient.connect(MONGO_HOST, (err, db) => {
 		assert.equal(null, err)
 		db.collection('users').find().toArray( (err, collection) => {
 			const books = collection.map( (user) => {

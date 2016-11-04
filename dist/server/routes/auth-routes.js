@@ -36,13 +36,7 @@ var _uuidV = require('uuid-v4');
 
 var _uuidV2 = _interopRequireDefault(_uuidV);
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
-
-var _dotenv = require('dotenv');
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
+var _index = require('../index');
 
 var _users = require('../models/users');
 
@@ -54,11 +48,8 @@ var _mongodb2 = _interopRequireDefault(_mongodb);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dotenv2.default.config({ path: __dirname + '/.env' });
-
-var url = process.env.MONGO_HOST;
-
 var MongoClient = _mongodb2.default.MongoClient;
+// const url = process.env.MONGO_HOST;
 
 var app = module.exports = _express2.default.Router();
 

@@ -7,16 +7,14 @@ import assert from 'assert'
 import Validator from 'validator'
 import validateUser from '../shared/validateUser'
 import uuid from 'uuid-v4'
-import path from 'path'
-import dotenv from 'dotenv'
-dotenv.config({path: __dirname + '/.env'});
+
+import { MONGO_HOST } from '../index'
 
 import User from '../models/users'
 
-const url = process.env.MONGO_HOST;
-
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
+// const url = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 

@@ -5,11 +5,9 @@ import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
 import uuid from 'uuid-v4'
 
-import path from 'path'
-import dotenv from 'dotenv'
-dotenv.config({path: __dirname + '/.env'});
-
 import User from '../models/users'
+
+import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL_PROD } from '../index'
 
 const app = module.exports = express.Router();
 
@@ -17,9 +15,9 @@ function createToken(username) { return jwt.sign({user: username}, secret, { exp
 
 // define GitHub strategy
 passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
+    clientID: GITHUB_CLIENT_ID,
+    clientSecret: GITHUB_CLIENT_SECRET,
+    callbackURL: GITHUB_CALLBACK_URL_PROD
   },
   function(accessToken, refreshToken, profile, done) {
     // search for user in database base on id = GitHub email address as unique identification

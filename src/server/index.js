@@ -13,7 +13,10 @@ import passport from 'passport'
 import dotenv from 'dotenv'
 dotenv.config({path: __dirname + '/.env'});
 
-const url = process.env.MONGO_HOST;
+export const MONGO_HOST = process.env.MONGO_HOST;
+export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+export const GITHUB_CALLBACK_URL_PROD = process.env.GITHUB_CALLBACK_URL_PROD;
 
 import mongoose from 'mongoose'
 
