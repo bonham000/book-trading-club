@@ -14,7 +14,7 @@ import User from '../models/users'
 
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
-//const url = process.env.MONGO_HOST;
+const url = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 

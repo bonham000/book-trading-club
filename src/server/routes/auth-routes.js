@@ -8,13 +8,11 @@ import Validator from 'validator'
 import validateUser from '../shared/validateUser'
 import uuid from 'uuid-v4'
 
-import { MONGO_HOST } from '../index'
-
 import User from '../models/users'
 
 import mongodb from 'mongodb'
 const MongoClient = mongodb.MongoClient;
-// const url = process.env.MONGO_HOST;
+const url = process.env.MONGO_HOST;
 
 const app = module.exports = express.Router();
 

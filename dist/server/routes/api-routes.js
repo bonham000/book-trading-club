@@ -47,7 +47,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var MongoClient = _mongodb2.default.MongoClient;
-//const url = process.env.MONGO_HOST;
+var url = process.env.MONGO_HOST;
 
 var app = module.exports = _express2.default.Router();
 

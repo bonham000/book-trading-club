@@ -28,8 +28,6 @@ var _users = require('../models/users');
 
 var _users2 = _interopRequireDefault(_users);
 
-var _index = require('../index');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = module.exports = _express2.default.Router();
@@ -40,9 +38,9 @@ function createToken(username) {
 
 // define GitHub strategy
 _passport2.default.use(new _passportGithub2.default({
-  clientID: _index.GITHUB_CLIENT_ID,
-  clientSecret: _index.GITHUB_CLIENT_SECRET,
-  callbackURL: _index.GITHUB_CALLBACK_URL_PROD
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
 }, function (accessToken, refreshToken, profile, done) {
   // search for user in database base on id = GitHub email address as unique identification
   _users2.default.findOne({ id: profile.emails[0].value }, function (err, user) {

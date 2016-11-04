@@ -10,13 +10,7 @@ import session from 'express-session'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 
-import dotenv from 'dotenv'
-dotenv.config({path: __dirname + '/.env'});
-
-export const MONGO_HOST = process.env.MONGO_HOST;
-export const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-export const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-export const GITHUB_CALLBACK_URL_PROD = process.env.GITHUB_CALLBACK_URL_PROD;
+const MONGO_HOST = process.env.MONGO_HOST;
 
 import mongoose from 'mongoose'
 
@@ -33,7 +27,7 @@ if (NODE_ENV === 'development') { devConfig(app) } else { prodConfig(app) }
 
 // test connection to database
 mongoose.Promise = global.Promise
-mongoose.connect(url, () => { console.log('connected through mongoose') });
+mongoose.connect(MONGO_HOST, () => { console.log('connected through mongoose') });
 
 app.use(express.static('dist/client'));
 

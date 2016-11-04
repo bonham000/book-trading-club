@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GITHUB_CALLBACK_URL_PROD = exports.GITHUB_CLIENT_SECRET = exports.GITHUB_CLIENT_ID = exports.MONGO_HOST = undefined;
 
 var _express = require('express');
 
@@ -47,10 +46,6 @@ var _passport = require('passport');
 
 var _passport2 = _interopRequireDefault(_passport);
 
-var _dotenv = require('dotenv');
-
-var _dotenv2 = _interopRequireDefault(_dotenv);
-
 var _mongoose = require('mongoose');
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
@@ -69,12 +64,7 @@ var _passport4 = _interopRequireDefault(_passport3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_dotenv2.default.config({ path: __dirname + '/.env' });
-
-var MONGO_HOST = exports.MONGO_HOST = process.env.MONGO_HOST;
-var GITHUB_CLIENT_ID = exports.GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-var GITHUB_CLIENT_SECRET = exports.GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-var GITHUB_CALLBACK_URL_PROD = exports.GITHUB_CALLBACK_URL_PROD = process.env.GITHUB_CALLBACK_URL_PROD;
+var MONGO_HOST = process.env.MONGO_HOST;
 
 var app = (0, _express2.default)();
 
@@ -89,7 +79,7 @@ if (_env.NODE_ENV === 'development') {
 
 // test connection to database
 _mongoose2.default.Promise = global.Promise;
-_mongoose2.default.connect(url, function () {
+_mongoose2.default.connect(MONGO_HOST, function () {
   console.log('connected through mongoose');
 });
 

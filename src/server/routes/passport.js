@@ -7,17 +7,15 @@ import uuid from 'uuid-v4'
 
 import User from '../models/users'
 
-import { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, GITHUB_CALLBACK_URL_PROD } from '../index'
-
 const app = module.exports = express.Router();
 
 function createToken(username) { return jwt.sign({user: username}, secret, { expiresIn: 60 * 60 }) }
 
 // define GitHub strategy
 passport.use(new GitHubStrategy({
-    clientID: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: GITHUB_CALLBACK_URL_PROD
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
   },
   function(accessToken, refreshToken, profile, done) {
     // search for user in database base on id = GitHub email address as unique identification
