@@ -159,8 +159,9 @@ body {
 				margin: 2px;
 				font-size: 20px;
 			}
-			button:hover {
+			button {
 				border: 1px solid black;
+				background: white;
 			}
 		}
 	}
@@ -360,11 +361,14 @@ body {
 			.image {
 				width: 125px;
 				height: auto;
+				padding-left: 12px;
 			}
 			.content {
 				width: 30vw;
 				height: 150px;
 				padding-top: 12px;
+				padding-left: 15px;
+				margin-left: 30px;
 				h2 {
 					margin: 3px;
 					font-size: 26px;
@@ -373,6 +377,10 @@ body {
 				p {
 					margin: 2px;
 					font-size: 20px;
+				}
+				button {
+					border: 1px solid black;
+					background: white;
 				}
 			}
 		}
@@ -453,6 +461,7 @@ body {
 		select {
 			width: 75vw;
 			font-size: 18px;
+			border: 1px solid black;
 		}
 	  button {
 	  	font-size: 22px;
@@ -503,21 +512,22 @@ body {
 			.image {
 				width: 100px;
 				height: auto;
+				padding-left: 7px;
 			}
 			.content {
 				width: 55vw;
 				height: 200px;
-				padding-left: 10px;
-				margin-left: 20px;
+				padding-left: 12px;
+				margin-left: 25px;
 				text-align: left;
 				h2 {
 					margin: 3px;
-					font-size: 20px;
+					font-size: 18px;
 					width: 50vw;
 				}
 				p {
 					margin: 2px;
-					font-size: 18px;
+					font-size: 16px;
 				}
 				button {
 					font-size: 22px;
@@ -529,23 +539,24 @@ body {
 		.book {
 			width: 90vw;
 			.image {
-				width: 75px;
+				width: 100px;
 				height: auto;
+				padding-left: 12px;
 			}
 			.content {
-				width: 55vw;
+				width: 50vw;
 				height: 150px;
 				text-align: left;
 				padding-left: 15px;
-				margin-left: 25px;
+				margin-left: 30px;
 				h2 {
-					width: 50vw;
 					margin: 3px;
-					font-size: 20px;
+					font-size: 18px;
+					width: 45vw;
 				}
 				p {
 					margin: 2px;
-					font-size: 18px;
+					font-size: 16px;
 				}
 			}
 		}

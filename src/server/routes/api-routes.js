@@ -4,9 +4,12 @@ import assert from 'assert'
 import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
-
 import XMLConverter from 'xmljson'
 import uuid from 'uuid-v4'
+
+// dotenv for development
+import dotenv from 'dotenv'
+dotenv.config({silent: true});
 
 import User from '../models/users'
 

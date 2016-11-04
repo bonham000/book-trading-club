@@ -54,7 +54,7 @@ app.use(apiRoutes);
 
 app.use(fallback(path.join(__dirname, '../../dist/client/index.html')));
 
-app.listen(process.env.PORT || 8000, (err) => {
+app.listen(PORT, (err) => {
   if (err) throw err;
   console.log(`The Express Server is Listening at port ${PORT} in ${NODE_ENV} mode`);
 });

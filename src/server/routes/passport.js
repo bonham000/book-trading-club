@@ -5,6 +5,10 @@ import jwt from 'jsonwebtoken'
 import secret from '../jwt-config'
 import uuid from 'uuid-v4'
 
+// dotenv for development
+import dotenv from 'dotenv'
+dotenv.config({silent: true});
+
 import User from '../models/users'
 
 const app = module.exports = express.Router();

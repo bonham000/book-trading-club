@@ -32,6 +32,10 @@ var _uuidV = require('uuid-v4');
 
 var _uuidV2 = _interopRequireDefault(_uuidV);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _users = require('../models/users');
 
 var _users2 = _interopRequireDefault(_users);
@@ -43,6 +47,11 @@ var _mongodb2 = _interopRequireDefault(_mongodb);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+// dotenv for development
+
+
+_dotenv2.default.config({ silent: true });
 
 var MongoClient = _mongodb2.default.MongoClient;
 var MONGO_HOST = process.env.MONGO_HOST;
