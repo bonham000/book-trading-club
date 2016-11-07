@@ -51,8 +51,9 @@ _passport2.default.use(new _passportGithub2.default({
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
 }, function (accessToken, refreshToken, profile, done) {
+  var userID = profile.email ? profile.email : profile.id;
   // search for user in database base on id = GitHub email address as unique identification
-  _users2.default.findOne({ id: profile.emails[0].value }, function (err, user) {
+  _users2.default.findOne({ id: userID }, function (err, user) {
     // handle error
     if (err) {
       return done(err);
@@ -60,13 +61,13 @@ _passport2.default.use(new _passportGithub2.default({
     // if there is no user with this email, create a new one
     if (!user) {
       user = new _users2.default({
-        id: profile.emails[0].value,
+        id: userID,
         displayName: profile.displayName,
         username: profile.username,
         password: '',
         githubId: profile.id,
         userData: {
-          userID: profile.emails[0].value,
+          userID: userID,
           username: profile.username,
           fullName: profile.displayName,
           location: '',
@@ -81,7 +82,7 @@ _passport2.default.use(new _passportGithub2.default({
         return done(err, user);
       });
       // if user already has an account with this email, add their github ID  
-    } else if (profile.emails[0].value === user.id) {
+    } else if (userID === user.id) {
       user.githubId = profile.id;
       user.save(function (err) {
         if (err) console.log(err);
