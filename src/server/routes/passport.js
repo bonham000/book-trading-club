@@ -22,21 +22,20 @@ passport.use(new GitHubStrategy({
     callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
   },
   function(accessToken, refreshToken, profile, done) {
-    const userID = profile.email ? profile.email : profile.id;
     // search for user in database base on id = GitHub email address as unique identification
-    User.findOne({ id: userID }, function(err, user) {
+    User.findOne({ id: profile.id }, function(err, user) {
       // handle error
       if (err) { return done(err) }
       // if there is no user with this email, create a new one
       if (!user) {
         user = new User({
-            id: userID,
+            id: profile.id,
             displayName: profile.displayName,
             username: profile.username,
             password: '',
             githubId: profile.id,
             userData: {
-              userID: userID,
+              userID: profile.id,
               username: profile.username,
               fullName: profile.displayName,
               location: '',
@@ -50,14 +49,6 @@ passport.use(new GitHubStrategy({
             if (err) console.log(err);
             return done(err, user);
         });
-      // if user already has an account with this email, add their github ID  
-      } else if (userID === user.id) {
-        user.githubId = profile.id
-        user.save(function(err) {
-            if (err) console.log(err);
-            return done(err, user);
-        });
-      // user has logged in before, return user and proceed
       } else {
           console.log('user,', user);
           return done(err, user);
@@ -119,7 +110,7 @@ app.post('/verify', function(req, res){
 
                 const notification = {
                   id: uuid(),
-                  msg: `${email} no longer owns ${offer.offeredBook.title} which they offered to trade you, so the trade has been removed.`
+                  msg: `${offer.offerOwner} no longer owns ${offer.offeredBook.title} which they offered to trade you, so the trade has been removed.`
                 }
                 let notificationsUpdate = user.userData.notifications.slice();
                 notificationsUpdate.push(notification);
@@ -172,7 +163,7 @@ app.post('/verify', function(req, res){
         }
         
         let newRequests = receivedRequests.filter( (request) => { return testReceivedRequests(userBooks, request) });
-        // update recevied requests for user for them to see updated information upon login
+        // update received requests for user for them to see updated information upon login
         user.userData.receivedRequests = newRequests;
         user.save(function(err) { if (err) throw err; });
         // remove pending request from offer owner as well

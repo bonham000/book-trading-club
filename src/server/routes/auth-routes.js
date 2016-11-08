@@ -122,7 +122,7 @@ app.post('/sessions/create', function(req, res) {
 
                 const notification = {
                   id: uuid(),
-                  msg: `${email} no longer owns ${offer.offeredBook.title} which they offered to trade you, so the trade has been removed.`
+                  msg: `${user.username} no longer owns ${offer.offeredBook.title} which they offered to trade you, so the trade has been removed.`
                 }
                 let notificationsUpdate = user.userData.notifications.slice();
                 notificationsUpdate.push(notification);

@@ -72,7 +72,7 @@ class Account extends React.Component {
 					{ this.state.editProfile ?
 
 						<div>
-							<label>Username:</label><br />
+							<label>Full Name:</label><br />
 							<input
 								type = "text"
 								name = 'fullName'
@@ -94,7 +94,6 @@ class Account extends React.Component {
 
 						<div>
 							<p><u>Username</u>: {user.username}</p>
-							<p><u>Email</u>: {user.userID}</p>
 							<p><u>Full Name</u>: {user.fullName}</p>
 							{ user.location !== '' && <p>Location: {user.location}</p> }
 							<button onClick = {this.toggleEdit}>Edit Your Personal Information</button>
