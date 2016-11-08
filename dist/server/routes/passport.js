@@ -66,7 +66,7 @@ _passport2.default.use(new _passportGithub2.default({
         password: '',
         githubId: profile.id,
         userData: {
-          userID: profile.id,
+          userID: profile.username,
           username: profile.username,
           fullName: profile.displayName,
           location: '',

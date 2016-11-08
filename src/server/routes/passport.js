@@ -35,7 +35,7 @@ passport.use(new GitHubStrategy({
             password: '',
             githubId: profile.id,
             userData: {
-              userID: profile.id,
+              userID: profile.username,
               username: profile.username,
               fullName: profile.displayName,
               location: '',
