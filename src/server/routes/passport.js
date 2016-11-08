@@ -23,13 +23,13 @@ passport.use(new GitHubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // search for user in database base on id = GitHub email address as unique identification
-    User.findOne({ id: profile.id }, function(err, user) {
+    User.findOne({ githubId: profile.id }, function(err, user) {
       // handle error
       if (err) { return done(err) }
       // if there is no user with this email, create a new one
       if (!user) {
         user = new User({
-            id: profile.id,
+            id: profile.username,
             displayName: profile.displayName,
             username: profile.username,
             password: '',

@@ -52,7 +52,7 @@ _passport2.default.use(new _passportGithub2.default({
   callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
 }, function (accessToken, refreshToken, profile, done) {
   // search for user in database base on id = GitHub email address as unique identification
-  _users2.default.findOne({ id: profile.id }, function (err, user) {
+  _users2.default.findOne({ githubId: profile.id }, function (err, user) {
     // handle error
     if (err) {
       return done(err);
@@ -60,7 +60,7 @@ _passport2.default.use(new _passportGithub2.default({
     // if there is no user with this email, create a new one
     if (!user) {
       user = new _users2.default({
-        id: profile.id,
+        id: profile.username,
         displayName: profile.displayName,
         username: profile.username,
         password: '',
