@@ -51,9 +51,8 @@ _passport2.default.use(new _passportGithub2.default({
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: process.env.GITHUB_CALLBACK_URL_PROD
 }, function (accessToken, refreshToken, profile, done) {
-  var userID = profile.email ? profile.email : profile.id;
   // search for user in database base on id = GitHub email address as unique identification
-  _users2.default.findOne({ id: userID }, function (err, user) {
+  _users2.default.findOne({ id: profile.id }, function (err, user) {
     // handle error
     if (err) {
       return done(err);
@@ -61,13 +60,13 @@ _passport2.default.use(new _passportGithub2.default({
     // if there is no user with this email, create a new one
     if (!user) {
       user = new _users2.default({
-        id: userID,
+        id: profile.id,
         displayName: profile.displayName,
         username: profile.username,
         password: '',
         githubId: profile.id,
         userData: {
-          userID: userID,
+          userID: profile.id,
           username: profile.username,
           fullName: profile.displayName,
           location: '',
@@ -81,14 +80,6 @@ _passport2.default.use(new _passportGithub2.default({
         if (err) console.log(err);
         return done(err, user);
       });
-      // if user already has an account with this email, add their github ID  
-    } else if (userID === user.id) {
-      user.githubId = profile.id;
-      user.save(function (err) {
-        if (err) console.log(err);
-        return done(err, user);
-      });
-      // user has logged in before, return user and proceed
     } else {
       console.log('user,', user);
       return done(err, user);
@@ -146,7 +137,7 @@ app.post('/verify', function (req, res) {
 
                   var notification = {
                     id: (0, _uuidV2.default)(),
-                    msg: email + ' no longer owns ' + offer.offeredBook.title + ' which they offered to trade you, so the trade has been removed.'
+                    msg: offer.offerOwner + ' no longer owns ' + offer.offeredBook.title + ' which they offered to trade you, so the trade has been removed.'
                   };
                   var notificationsUpdate = user.userData.notifications.slice();
                   notificationsUpdate.push(notification);
@@ -213,7 +204,7 @@ app.post('/verify', function (req, res) {
           var newRequests = receivedRequests.filter(function (request) {
             return testReceivedRequests(userBooks, request);
           });
-          // update recevied requests for user for them to see updated information upon login
+          // update received requests for user for them to see updated information upon login
           user.userData.receivedRequests = newRequests;
           user.save(function (err) {
             if (err) throw err;
