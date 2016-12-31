@@ -6,6 +6,9 @@ $yellow: #FFD22B;
 body {
 	padding: 0;
 	margin: 0;
+	// background: #DADFF7;
+	// background: #CDE6F5;
+	// background: #F0EDEE;
 	background: #FFEDE1;
   background-size: cover;
 	color: rgb(25,25,25);
@@ -175,7 +178,7 @@ body {
 		flex-wrap: nowrap;
 		justify-content: center;
 		align-items: center;
-		border: 1px solid rgba(20,20,20,0.4);
+		border: 1px solid rgba(20,20,20,0.5);
 		border-radius: 3px;
 		background: rgba(20,20,20,0.15);
 		width: 700px;
